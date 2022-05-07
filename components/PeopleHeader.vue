@@ -25,7 +25,9 @@
       </ClientOnly>
     </div>
     <div class="flex justify-content-center">
-      <a v-styleclass="{ selector: '.people-carousel', leaveActiveClass: 'my-fadeout', leaveToClass: 'hidden', enterClass: 'hidden', enterActiveClass: 'my-fadein' }">
+      <a 
+        class="button-icon"
+        v-styleclass="{ selector: '.people-carousel', leaveActiveClass: 'fadeoutup', leaveToClass: 'hidden', enterClass: 'hidden', enterActiveClass: 'fadeinup' }">
         <i class="pi pi-angle-down"></i>
       </a>
     </div>
@@ -68,33 +70,7 @@ const responsiveOptions = ref([
   margin: 0 auto;
 }
 
-@keyframes my-fadein {
-    0%   { 
-      opacity: 0; 
-      transform: translateY(-100%)
-    }
-    100% { 
-      opacity: 1;
-      transform: translateY(0)
-    }
-}
-
-@keyframes my-fadeout {
-    0%   { 
-      opacity: 1;
-      transform: translateY(0) 
-    }
-    100% { 
-      opacity: 0;
-      transform: translateY(-100%) 
-    }
-}
-
-.my-fadein {
-    animation: my-fadein 150ms linear;
-}
-        
-.my-fadeout {
-    animation: my-fadeout 150ms linear;
+.button-icon {
+  cursor: pointer;
 }
 </style>

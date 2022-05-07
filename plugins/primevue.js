@@ -8,12 +8,15 @@ import Avatar from 'primevue/avatar';
 import AvatarGroup from 'primevue/avatargroup';
 import ToastService from 'primevue/toastservice';
 import StyleClass from 'primevue/styleclass';
+import InputMask from 'primevue/inputmask';
+
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
     nuxtApp.vueApp.component('Button', Button);
     nuxtApp.vueApp.component('InputText', InputText);
+    nuxtApp.vueApp.component('InputMask', InputMask);
     nuxtApp.vueApp.component('Toast', Toast);
     nuxtApp.vueApp.component('Carousel', Carousel);
     nuxtApp.vueApp.component('Avatar', Avatar);
