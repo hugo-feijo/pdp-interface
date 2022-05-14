@@ -13,7 +13,8 @@
             <template #item="slotProps">
               <div class="people-item">
                 <div class="people-item-content">
-                  <Avatar icon="pi pi-user" shape="circle" size="xlarge" class="shadow-3"/>
+                  <Avatar v-if="slotProps.data.avatar" :image="slotProps.data.avatar" shape="circle" size="xlarge" class="shadow-3"/>
+                  <Avatar v-else icon="pi pi-user" shape="circle" size="xlarge" class="shadow-3"/>
                   <div>
                     <h4 class="mb-1">{{slotProps.data.name}}</h4>
                   </div>
@@ -34,7 +35,27 @@
   </div>
 </template>
 <script setup lang="ts">
-const cars = ref([{name: 'Teste'}, {name: 'Teste2'}, {name: 'Teste3'}, {name: 'Teste4'}, {name: 'Teste5'}]);
+import { faker } from '@faker-js/faker'
+const cars = ref([
+  {
+    name: faker.name.findName(),
+    avatar: faker.image.avatar()
+  },
+  {
+    name: faker.name.findName(),
+    avatar: faker.image.avatar()
+  }, 
+  {
+    name: faker.name.findName()
+  }, 
+  {
+    name: faker.name.findName(),
+    avatar: faker.image.avatar()
+  }, 
+  {
+    name: faker.name.findName()
+  }, 
+]);
 const responsiveOptions = ref([
 			{
 				breakpoint: '1200px',

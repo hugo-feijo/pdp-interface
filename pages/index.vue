@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-column">
     <div class="restaurant-header w-full overflow-hidden flex justify-content-center align-items-center">
-      <img src="~/assets/img/restaurant-logo.jpg" class="max-w-full">
+      <img src="~/assets/img/coffe-shop.jpg" class="max-w-full">
     </div>
 		<div>
-      <div class="flex flex-column gap-8 justify-content-center align-items-center mt-8 inputs-data">
+      <div class="flex flex-column gap-8 justify-content-center align-items-center mt-5 inputs-data">
         <span class="p-float-label">
           <InputText id="name" type="text" v-model="user.name"/>
           <label for="name">Nome</label>

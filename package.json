@@ -7,6 +7,7 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.3.1",
     "node-sass": "^7.0.1",
     "nuxt": "3.0.0-rc.1",
     "primevue": "3.12.6",

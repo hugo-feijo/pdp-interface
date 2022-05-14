@@ -9,6 +9,7 @@ import AvatarGroup from 'primevue/avatargroup';
 import ToastService from 'primevue/toastservice';
 import StyleClass from 'primevue/styleclass';
 import InputMask from 'primevue/inputmask';
+import Skeleton from 'primevue/skeleton';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -21,5 +22,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Carousel', Carousel);
     nuxtApp.vueApp.component('Avatar', Avatar);
     nuxtApp.vueApp.component('AvatarGroup', AvatarGroup);
+    nuxtApp.vueApp.component('Skeleton', Skeleton);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
 });
