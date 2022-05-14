@@ -4,10 +4,8 @@
       <img class="h-full" :src="item.image" >
     </div>
     <div class="w-full h-full overflow-scroll">
-      <h3 class="mt-0">{{item.name}}</h3>
-      <div class="">
-        <p>{{item.description}}</p>
-      </div>
+      <p class="mt-0 font-semibold text-xl">{{item.name}}</p>
+      <p>{{item.description}}</p>
     </div>
   </div>
 </template>
