@@ -4,38 +4,84 @@
       <img src="~/assets/img/coffe-shop.jpg" class="max-w-full">
     </div>
 		<div>
-      <div class="flex flex-column gap-8 justify-content-center align-items-center mt-5 inputs-data">
-        <span class="p-float-label">
-          <InputText id="name" type="text" v-model="user.name"/>
-          <label for="name">Nome</label>
-        </span>
-        <span class="p-float-label">
-          <InputMask id="cpf" type="text" v-model="user.cpf" class="p-component" mask="999.999.999-99"/>
-          <label for="cpf">CPF</label>
-        </span>
+      <form 
+        @submit.prevent="handleSubmit(!v$.$invalid)"
+        class="flex flex-column justify-content-center align-items-center mt-5 inputs-data">
+        <div class="field">
+          <div class="p-float-label">
+            <InputText id="name" type="text" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}"/>
+            <label for="name" :class="{'p-error':v$.name.$invalid && submitted}">Nome*</label>
+          </div>
+          <small v-if="(v$.name.$invalid && submitted) || v$.name.$pending.$response" class="p-error">Nome é obrigatório</small>
+        </div>
+        <div class="field">
+          <div class="p-float-label">
+            <InputMask id="cpf" type="text" v-model="v$.cpf.$model" class="p-component" mask="999.999.999-99" :class="{'p-invalid':v$.name.$invalid && submitted}"/>
+            <label for="cpf" :class="{'p-error':v$.name.$invalid && submitted}">CPF*</label>
+          </div>
+          <small v-if="(v$.cpf.$invalid && submitted) || v$.cpf.$pending.$response" class="p-error">CPF é obrigatório</small>
+        </div>
         <Button type="submit" label="Entrar" class="p-component"/>
-      </div>
+      </form>
 		</div>
 	</div>
 </template>
 <script setup lang="ts">
+import { email, required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+const router = useRouter();
+
 definePageMeta({
   layout: "app-layout",
 });
-const user = ref({
-  name: "",
-  cpf: ""
+
+const submitted = ref(false);
+const showMessage = ref(false);
+const state = reactive({
+  name: '',
+  cpf: ''
 });
+
+const rules = {
+    name: { required },
+    cpf: { required }
+};
+
+const v$ = useVuelidate(rules, state);
+
+function handleSubmit(isFormValid: Boolean) {
+  submitted.value = true;
+  if (!isFormValid) {
+    return;
+  }
+  toggleDialog();
+
+  router.push('/menu');
+}
+
+function toggleDialog() {
+    showMessage.value = !showMessage.value;
+
+    if(!showMessage.value) {
+        resetForm();
+    }
+}
+
+function resetForm() {
+  state.name = '';
+  state.cpf = '';
+}
 </script>
 
 
 <style lang="scss">
 body {
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .inputs-data {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .restaurant-header {
