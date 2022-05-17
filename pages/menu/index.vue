@@ -18,19 +18,19 @@ const foods = {
       id: faker.datatype.uuid(),
       name: 'Brie Burguer',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/ham01.jpg",
+      image: "/img/foods/ham01.jpg",
     },
     {
       id: faker.datatype.uuid(),
       name: 'Catupiry com bacon',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/ham02.jpg",
+      image: "/img/foods/ham02.jpg",
     },
     {
       id: faker.datatype.uuid(),
       name: 'Costela',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/ham03.jpg",
+      image: "/img/foods/ham03.jpg",
     }
   ]
 }
@@ -42,27 +42,24 @@ const drinks = {
       id: faker.datatype.uuid(),
       name: 'Coca Cola Litro',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/coca.jpg",
+      image: "/img/foods/coca.jpg",
     },
     {
       id: faker.datatype.uuid(),
       name: 'Heineken Long',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/heineken.jpg",
+      image: "/img/foods/heineken.jpg",
     },
     {
       id: faker.datatype.uuid(),
       name: 'Água 500ml',
       description: faker.lorem.lines(),
-      image: "/assets/img/foods/agua.jpg",
+      image: "/img/foods/agua.jpg",
     }
   ]
 }
 </script>
 <style lang="scss">
-body {
-  background-color: rgb(250, 254, 255);
-}
 .card-section {
   border-radius: 0.75rem;
   background-color: #fff;
