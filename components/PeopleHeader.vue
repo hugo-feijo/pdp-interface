@@ -25,10 +25,11 @@
         </div>
       </ClientOnly>
     </div>
-    <div class="flex justify-content-center">
+    <div class="flex justify-content-center animation-rotate" :class="{rotate: activeAnimation}">
       <a 
         class="button-icon"
-        v-styleclass="{ selector: '.people-carousel', leaveActiveClass: 'fadeoutup', leaveToClass: 'hidden', enterClass: 'hidden', enterActiveClass: 'fadeinup' }">
+        v-styleclass="{ selector: '.people-carousel', leaveActiveClass: 'fadeoutup', leaveToClass: 'hidden', enterClass: 'hidden', enterActiveClass: 'fadeinup' }"
+        @click="activeAnimation = !activeAnimation">
         <i class="pi pi-angle-down"></i>
       </a>
     </div>
@@ -36,6 +37,7 @@
 </template>
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
+const activeAnimation = ref(false)
 const cars = ref([
   {
     name: faker.name.findName(),
@@ -94,4 +96,13 @@ const responsiveOptions = ref([
 .button-icon {
   cursor: pointer;
 }
+
+.animation-rotate {
+  transition: transform 0.3s ease-in-out;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
 </style>
