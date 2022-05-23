@@ -1,12 +1,12 @@
 <template>
   <div class="flex block-item h-8rem px-3 mb-4">
-    <div class="flex justify-content-center image-item overflow-hidden w-6">
+    <div class="flex justify-content-center image-item overflow-hidden w-6" st>
       <img class="h-full" :src="item.image" >
     </div>
-    <div class="w-full h-full overflow-scroll">
+    <ScrollPanel style="width: 100%; height: 100%">
       <p class="mt-0 font-semibold text-xl">{{item.name}}</p>
       <p>{{item.description}}</p>
-    </div>
+    </ScrollPanel>
   </div>
 </template>
 <script setup lang="ts">
