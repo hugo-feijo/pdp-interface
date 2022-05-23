@@ -1,5 +1,10 @@
 <template>
   <div class="pt-2 flex flex-column align-items-center flex-wrap" style="gap: 2rem">
+    <span class="p-input-icon-right p-float-label">
+      <InputText id="search" type="text" v-model="searchText"/>
+      <label for="search">Pesquisar</label>
+      <i class="pi pi-search"/>
+    </span>
     <MenuSection :config="foods" class="py-2"/>
     <MenuSection :config="drinks" class="py-2"/>
   </div>
@@ -11,7 +16,9 @@ definePageMeta({
   layout: "app-layout",
 });
 
-const foods = {
+const searchText = ref('')
+
+const baseFoods = ref({
   section: 'Hamburguers',
   items: [
     {
@@ -33,9 +40,9 @@ const foods = {
       image: "/img/foods/ham03.jpg",
     }
   ]
-}
+})
 
-const drinks = {
+const baseDrinks = ref({
   section: 'Bebidas',
   items: [
     {
@@ -57,7 +64,25 @@ const drinks = {
       image: "/img/foods/agua.jpg",
     }
   ]
-}
+})
+
+const foods = computed(() => {
+  return {
+    section: baseFoods.value.section, 
+    items: baseFoods.value.items.filter(food => {
+      return food.name.toLowerCase().includes(searchText.value.toLowerCase())
+    })
+  }
+})
+const drinks = computed(() => {
+  return {
+    section: baseDrinks.value.section, 
+    items: baseDrinks.value.items.filter(drink => {
+      return drink.name.toLowerCase().includes(searchText.value.toLowerCase())
+    })
+  }
+})
+
 </script>
 <style lang="scss">
 </style>
