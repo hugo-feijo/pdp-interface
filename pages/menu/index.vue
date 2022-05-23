@@ -1,7 +1,7 @@
 <template>
-  <div class="menu-sections pt-2">
-    <MenuSection :config="foods" class="shadow-2 py-2 card-section mb-5"/>
-    <MenuSection :config="drinks" class="shadow-2 py-2 card-section mb-5"/>
+  <div class="pt-2 flex flex-column align-items-center flex-wrap" style="gap: 2rem">
+    <MenuSection :config="foods" class="py-2"/>
+    <MenuSection :config="drinks" class="py-2"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -60,8 +60,4 @@ const drinks = {
 }
 </script>
 <style lang="scss">
-.card-section {
-  border-radius: 0.75rem;
-  background-color: #fff;
-}
 </style>

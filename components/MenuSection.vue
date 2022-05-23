@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="section-itens shadow-2">
     <h2 class="ml-4 text-2xl font-bold">{{config.section}}</h2>
     <ClientOnly>
       <div :key="item.id" v-for="item in config.items">
@@ -18,3 +18,11 @@ const props = defineProps({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.section-itens {
+  border-radius: 0.75rem;
+  background-color: #fff;
+  max-width: 600px;
+}
+</style>
