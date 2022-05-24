@@ -1,6 +1,6 @@
 <template>
   <div class="flex block-item h-8rem px-3 mb-4">
-    <div class="flex justify-content-center image-item overflow-hidden w-6" st>
+    <div class="flex justify-content-center image-item overflow-hidden w-6" @click="$emit('itemSelected', item)">
       <img class="h-full" :src="item.image" >
     </div>
     <ScrollPanel style="width: 100%; height: 100%">
@@ -15,7 +15,7 @@ const props = defineProps({
   item: {
     type: Object
   }
-})  
+})
 </script>
 
 <style lang="scss" scoped>

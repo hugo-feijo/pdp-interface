@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     'primevue/resources/themes/saga-blue/theme.css',
     'primevue/resources/primevue.css',
     'primeicons/primeicons.css',
-    'primeflex/primeflex.css'
+    'primeflex/primeflex.css',
+    '~/assets/style/modal-item.scss'
   ],
   build: {
       transpile: ['primevue']

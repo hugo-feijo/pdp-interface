@@ -12,6 +12,7 @@ import InputMask from 'primevue/inputmask';
 import Skeleton from 'primevue/skeleton';
 import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
+import Dialog from 'primevue/dialog';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -27,5 +28,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Skeleton', Skeleton);
     nuxtApp.vueApp.component('Divider', Divider);
     nuxtApp.vueApp.component('ScrollPanel', ScrollPanel);
+    nuxtApp.vueApp.component('Dialog', Dialog);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
 });
