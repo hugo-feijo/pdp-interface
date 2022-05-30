@@ -15,7 +15,7 @@
       modal 
       dismissableMask 
       contentClass="item-modal"
-      :style="{'max-width': '600px'}">
+      :style="{'max-width': '600px', 'min-width': '70px'}">
       
       <div class="header-modal flex justify-content-center overflow-hidden h-10rem">
         <img class="image-modal" :src="selectedItem.image" >
@@ -24,7 +24,9 @@
         <p>{{selectedItem.description}}</p>
       </div>
       <template #footer>
-        <PeopleHeader />
+        <PeopleHeader selectMode/>
+        <Button label="Cancelar" icon="pi pi-times" @click="showModal = !showModal" class="p-button-text"/>
+        <Button label="Pedir" icon="pi pi-check" @click="showModal = !showModal" autofocus />
       </template>
     </Dialog>
   </div>

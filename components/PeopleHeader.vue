@@ -9,7 +9,7 @@
             :numScroll="5" 
             :circular="true" 
             :autoplayInterval="3000" 
-            :responsiveOptions="responsiveOptions">
+            :responsiveOptions="selectMode ? responsiveOptionsSelectedMode : responsiveOptions">
             <template #item="slotProps">
               <div class="people-item">
                 <div class="people-item-content">
@@ -25,7 +25,7 @@
         </div>
       </ClientOnly>
     </div>
-    <div class="flex justify-content-center animation-rotate" :class="{rotate: activeAnimation}">
+    <div class="flex justify-content-center animation-rotate" :class="{rotate: activeAnimation}" v-if="!selectMode">
       <a 
         class="button-icon"
         v-styleclass="{ selector: '.people-carousel', leaveActiveClass: 'fadeoutup', leaveToClass: 'hidden', enterClass: 'hidden', enterActiveClass: 'fadeinup' }"
@@ -37,25 +37,36 @@
 </template>
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
+
+const props = defineProps({
+  selectMode: {
+    type: Boolean,
+    default: false,
+  }
+})
+
 const activeAnimation = ref(false)
+const names = [faker.name.findName(), faker.name.findName(), faker.name.findName(), faker.name.findName(), faker.name.findName()]
 const cars = ref([
   {
-    name: faker.name.findName(),
-    avatar: faker.image.avatar()
-  },
-  {
-    name: faker.name.findName(),
-    avatar: faker.image.avatar()
+    name: names[0],
+    avatar: `https://avatars.dicebear.com/api/initials/${names[0]}.svg`
   }, 
   {
-    name: faker.name.findName()
+    name: names[1],
+    avatar: `https://avatars.dicebear.com/api/initials/${names[1]}.svg`
   }, 
   {
-    name: faker.name.findName(),
-    avatar: faker.image.avatar()
+    name: names[2],
+    avatar: `https://avatars.dicebear.com/api/initials/${names[2]}.svg`
   }, 
   {
-    name: faker.name.findName()
+    name: names[3],
+    avatar: `https://avatars.dicebear.com/api/initials/${names[3]}.svg`
+  }, 
+  {
+    name: names[4],
+    avatar: `https://avatars.dicebear.com/api/initials/${names[4]}.svg`
   }, 
 ]);
 const responsiveOptions = ref([
@@ -75,12 +86,29 @@ const responsiveOptions = ref([
 				numScroll: 1
 			}
 		]);
+const responsiveOptionsSelectedMode = ref([
+			{
+				breakpoint: '1200px',
+				numVisible: 3,
+				numScroll: 3
+			},
+			{
+				breakpoint: '600px',
+				numVisible: 3,
+				numScroll: 3
+			},
+			{
+				breakpoint: '480px',
+				numVisible: 3,
+				numScroll: 3
+			}
+		]);
 </script>
 
 <style lang="scss">
 .people-item {
     .people-item-content {
-        margin-top: .3rem;
+        margin-top: 1rem;
         text-align: center;
     }
 
