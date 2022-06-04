@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex block-item h-8rem px-3 mb-4">
-      <div class="flex justify-content-center image-item overflow-hidden w-6" @click="itemSelected(item)">
+    <div class="flex block-item h-8rem px-3 mb-4" @click="itemSelected(item)">
+      <div class="flex justify-content-center image-item overflow-hidden w-6">
         <img class="h-full" :src="item.image" >
       </div>
       <ScrollPanel style="width: 100%; height: 100%">
