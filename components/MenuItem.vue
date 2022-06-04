@@ -5,7 +5,8 @@
         <img class="h-full" :src="item.image" >
       </div>
       <ScrollPanel style="width: 100%; height: 100%">
-        <p class="mt-0 font-semibold text-xl">{{item.name}}</p>
+        <p class="m-0 font-semibold text-xl">{{item.name}}</p>
+        <p class="mt-0 font-semibold text-sm">{{money}}</p>
         <p>{{item.description}}</p>
       </ScrollPanel>
     </div>      
@@ -21,6 +22,7 @@
         <img class="image-modal" :src="selectedItem.image" >
       </div>
       <div class="content">
+        <p class="font-semibold">{{money}}</p>
         <p>{{selectedItem.description}}</p>
       </div>
       <template #footer>
@@ -60,6 +62,10 @@ function itemSelected(item) {
   selectedItem.value = item
   showModal.value = true
 }
+
+const money = computed(() => {
+  return `R$${props.item.value.toFixed(2).replace('.', ',')}`
+})
 </script>
 
 <style lang="scss" scoped>
