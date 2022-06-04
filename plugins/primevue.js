@@ -13,6 +13,8 @@ import Skeleton from 'primevue/skeleton';
 import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import Dialog from 'primevue/dialog';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -29,5 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Divider', Divider);
     nuxtApp.vueApp.component('ScrollPanel', ScrollPanel);
     nuxtApp.vueApp.component('Dialog', Dialog);
+    nuxtApp.vueApp.component('DataTable', DataTable);
+    nuxtApp.vueApp.component('Column', Column);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
 });
