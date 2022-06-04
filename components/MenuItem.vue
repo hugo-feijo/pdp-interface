@@ -31,12 +31,19 @@
           <PeopleHeader selectMode class="w-full"/>
         </div>
         <Button label="Cancelar" icon="pi pi-times" @click="showModal = !showModal" class="p-button-text"/>
-        <Button label="Pedir" icon="pi pi-check" @click="showModal = !showModal" autofocus />
+        <Button 
+          label="Pedir" 
+          icon="pi pi-check" 
+          @click="sendSolicitation(selectedItem)" 
+          autofocus />
       </template>
     </Dialog>
+
   </div>
 </template>
 <script setup lang="ts">
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 interface Item {
   name: string;
@@ -66,6 +73,12 @@ function itemSelected(item) {
 const money = computed(() => {
   return `R$${props.item.value.toFixed(2).replace('.', ',')}`
 })
+
+function sendSolicitation(item) {
+  showModal.value = !showModal.value
+  toast.add({severity:'success', summary: 'Sucesso', detail:'Pedido enviado para cozinha.', life: 3000});
+
+}
 </script>
 
 <style lang="scss" scoped>
