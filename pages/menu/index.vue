@@ -12,7 +12,7 @@
         </span>
       </div>
       <div class="flex-none flex align-items-center justify-content-center">
-        <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-shopping-cart"/>
+        <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-shopping-cart" @click="goToCheckout()"/>
       </div>
     </div>
     <MenuSection :config="foods" class="py-2"/>
@@ -21,6 +21,7 @@
 </template>
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
+const router = useRouter();
 
 definePageMeta({
   layout: "app-layout",
@@ -93,6 +94,9 @@ const drinks = computed(() => {
   }
 })
 
+function goToCheckout() {
+  router.push('/checkout')
+}
 </script>
 <style lang="scss">
 </style>
