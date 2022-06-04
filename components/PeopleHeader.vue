@@ -12,11 +12,15 @@
             :responsiveOptions="selectMode ? responsiveOptionsSelectedMode : responsiveOptions">
             <template #item="slotProps">
               <div class="people-item">
-                <div class="people-item-content">
-                  <Avatar v-if="slotProps.data.avatar" :image="slotProps.data.avatar" shape="circle" size="xlarge" class="shadow-3"/>
-                  <Avatar v-else icon="pi pi-user" shape="circle" size="xlarge" class="shadow-3"/>
+                <div class="people-item-content" @click="selectPeople(slotProps.data)">
+                  <Avatar 
+                    :image="slotProps.data.avatar" 
+                    shape="circle" 
+                    size="xlarge"
+                    :class="selectMode && !slotProps.data.selected ? 'gray' : 'shadow-5'"/>
                   <div>
-                    <h4 class="mb-1">{{slotProps.data.name}}</h4>
+                    <h4 class="mb-1" v-if="!selectMode">{{slotProps.data.name}}</h4>
+                    <span class="mb-0" v-else>{{slotProps.data.name}}</span>
                   </div>
                 </div>
               </div>
@@ -50,59 +54,77 @@ const names = [faker.name.findName(), faker.name.findName(), faker.name.findName
 const cars = ref([
   {
     name: names[0],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[0]}.svg`
+    avatar: `https://avatars.dicebear.com/api/initials/${names[0]}.svg?radius=50`,
+    selected: false
   }, 
   {
     name: names[1],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[1]}.svg`
+    avatar: `https://avatars.dicebear.com/api/initials/${names[1]}.svg?radius=50`,
+    selected: false
   }, 
   {
     name: names[2],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[2]}.svg`
+    avatar: `https://avatars.dicebear.com/api/initials/${names[2]}.svg?radius=50`,
+    selected: false
   }, 
   {
     name: names[3],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[3]}.svg`
+    avatar: `https://avatars.dicebear.com/api/initials/${names[3]}.svg?radius=50`,
+    selected: false
   }, 
   {
     name: names[4],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[4]}.svg`
+    avatar: `https://avatars.dicebear.com/api/initials/${names[4]}.svg?radius=50`,
+    selected: false
   }, 
 ]);
 const responsiveOptions = ref([
-			{
-				breakpoint: '1200px',
-				numVisible: 3,
-				numScroll: 3
-			},
-			{
-				breakpoint: '600px',
-				numVisible: 2,
-				numScroll: 2
-			},
-			{
-				breakpoint: '480px',
-				numVisible: 1,
-				numScroll: 1
-			}
-		]);
+  {
+    breakpoint: '1200px',
+    numVisible: 3,
+    numScroll: 3
+  },
+  {
+    breakpoint: '600px',
+    numVisible: 2,
+    numScroll: 2
+  },
+  {
+    breakpoint: '480px',
+    numVisible: 1,
+    numScroll: 1
+  }
+]);
 const responsiveOptionsSelectedMode = ref([
-			{
-				breakpoint: '1200px',
-				numVisible: 3,
-				numScroll: 3
-			},
-			{
-				breakpoint: '600px',
-				numVisible: 3,
-				numScroll: 3
-			},
-			{
-				breakpoint: '480px',
-				numVisible: 3,
-				numScroll: 3
-			}
-		]);
+  {
+    breakpoint: '1200px',
+    numVisible: 3,
+    numScroll: 3
+  },
+  {
+    breakpoint: '600px',
+    numVisible: 3,
+    numScroll: 3
+  },
+  {
+    breakpoint: '480px',
+    numVisible: 3,
+    numScroll: 3
+  }
+]);
+
+function selectPeople(people: any) {
+  console.log(people)
+  if (props.selectMode) {
+    people.selected = !people.selected
+    cars.value = cars.value.map(item => {
+      if (item.name === people.name) {
+        item.selected = people.selected
+      }
+      return item
+    })
+  }
+}
 </script>
 
 <style lang="scss">
@@ -133,4 +155,8 @@ const responsiveOptionsSelectedMode = ref([
   transform: rotate(180deg);
 }
 
+.gray {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
 </style>

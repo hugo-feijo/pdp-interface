@@ -24,7 +24,10 @@
         <p>{{selectedItem.description}}</p>
       </div>
       <template #footer>
-        <PeopleHeader selectMode/>
+        <div class="flex flex-column align-items-start">
+          <span>Vai dividir esse item? selecione abaixo</span>
+          <PeopleHeader selectMode class="w-full"/>
+        </div>
         <Button label="Cancelar" icon="pi pi-times" @click="showModal = !showModal" class="p-button-text"/>
         <Button label="Pedir" icon="pi pi-check" @click="showModal = !showModal" autofocus />
       </template>
