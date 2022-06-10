@@ -51,6 +51,7 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 
 const tableId = route.params.id
+const config = useRuntimeConfig().public
 
 function handleSubmit(isFormValid: Boolean) {
   submitted.value = true;
@@ -74,6 +75,20 @@ function resetForm() {
   state.name = '';
   state.cpf = '';
 }
+
+const clients = ref()
+
+async function getOrderPad() {
+  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId}`, {method: 'POST'})
+}
+
+onMounted(() => {
+  getOrderPad()
+  .then((r: any) => {
+    clients.value = r.clients
+  })
+})
+
 </script>
 
 

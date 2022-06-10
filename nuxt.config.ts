@@ -14,5 +14,10 @@ export default defineNuxtConfig({
   ],
   build: {
       transpile: ['primevue']
+  },
+  runtimeConfig: {
+    public: {
+      SERVER_URL: process.env.SERVER_URL
+    }
   }
 })
