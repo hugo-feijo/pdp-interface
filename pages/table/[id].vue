@@ -85,7 +85,8 @@ async function getOrderPad() {
 onMounted(() => {
   getOrderPad()
   .then((r: any) => {
-    clients.value = r.clients
+    localStorage.setItem('orderPadId', r.id)
+    localStorage.setItem('clients', JSON.stringify(r.clients))
   })
 })
 

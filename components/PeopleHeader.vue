@@ -4,7 +4,7 @@
       <ClientOnly>
         <div class="card">
           <Carousel 
-            :value="cars" 
+            :value="clients" 
             :numVisible="5" 
             :numScroll="5" 
             :circular="true" 
@@ -50,34 +50,29 @@ const props = defineProps({
 })
 
 const activeAnimation = ref(false)
-const names = [faker.name.findName(), faker.name.findName(), faker.name.findName(), faker.name.findName(), faker.name.findName()]
-const cars = ref([
-  {
-    name: names[0],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[0]}.svg?radius=50`,
-    selected: false
-  }, 
-  {
-    name: names[1],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[1]}.svg?radius=50`,
-    selected: false
-  }, 
-  {
-    name: names[2],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[2]}.svg?radius=50`,
-    selected: false
-  }, 
-  {
-    name: names[3],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[3]}.svg?radius=50`,
-    selected: false
-  }, 
-  {
-    name: names[4],
-    avatar: `https://avatars.dicebear.com/api/initials/${names[4]}.svg?radius=50`,
-    selected: false
-  }, 
-]);
+
+const clients = ref()
+
+interface OriginalClient {
+  id: Number,
+  name: String,
+  cpf: String
+}
+
+function parseClients(originalClients: OriginalClient[]) {
+  return originalClients.map(x => {
+    return {
+      name: x.name,
+      avatar: `https://avatars.dicebear.com/api/initials/${x.name}.svg?radius=50`,
+      selected: false
+    }
+  })
+}
+
+onMounted(() => {
+  clients.value = parseClients(JSON.parse(localStorage.getItem('clients')))
+})
+
 const responsiveOptions = ref([
   {
     breakpoint: '1200px',
@@ -114,10 +109,9 @@ const responsiveOptionsSelectedMode = ref([
 ]);
 
 function selectPeople(people: any) {
-  console.log(people)
   if (props.selectMode) {
     people.selected = !people.selected
-    cars.value = cars.value.map(item => {
+    clients.value = clients.value.map(item => {
       if (item.name === people.name) {
         item.selected = people.selected
       }
