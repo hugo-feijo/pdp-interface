@@ -59,8 +59,7 @@ function handleSubmit(isFormValid: Boolean) {
     return;
   }
   toggleDialog();
-
-  router.push('/menu');
+  createClient().then(() => router.push('/menu'))
 }
 
 function toggleDialog() {
@@ -76,19 +75,9 @@ function resetForm() {
   state.cpf = '';
 }
 
-const clients = ref()
-
-async function getOrderPad() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId}`, {method: 'POST'})
+async function createClient() {
+  return await $fetch(`${config.SERVER_URL}/v1/api/client`, {method: 'POST', body: state, headers: {'X-Order-Pad-Id': localStorage.getItem('orderPadId')}})
 }
-
-onMounted(() => {
-  getOrderPad()
-  .then((r: any) => {
-    localStorage.setItem('orderPadId', r.id)
-    localStorage.setItem('clients', JSON.stringify(r.clients))
-  })
-})
 
 </script>
 

@@ -40,8 +40,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { faker } from '@faker-js/faker'
-
+const config = useRuntimeConfig().public
+const route = useRoute()
 const props = defineProps({
   selectMode: {
     type: Boolean,
@@ -69,9 +69,27 @@ function parseClients(originalClients: OriginalClient[]) {
   })
 }
 
+const timer = ref()
+
+async function getOrderPad() {
+  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${localStorage.getItem('tableId')}`, {method: 'POST'})
+}
+
+function fetchClients() {
+  getOrderPad()
+  .then((r: any) => {
+    localStorage.setItem('orderPadId', r.id)
+    localStorage.setItem('clients', JSON.stringify(r.clients))
+    clients.value = parseClients(r.clients)
+  })
+}
+
 onMounted(() => {
-  clients.value = parseClients(JSON.parse(localStorage.getItem('clients')))
+  fetchClients()
+  timer.value = setInterval(fetchClients, 10000)
 })
+
+watch(() => route.path, () => fetchClients())
 
 const responsiveOptions = ref([
   {
