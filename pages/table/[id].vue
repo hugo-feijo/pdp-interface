@@ -30,6 +30,7 @@
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 const router = useRouter();
+const route = useRoute();
 
 definePageMeta({
   layout: "app-layout",
@@ -48,6 +49,8 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, state);
+
+const tableId = route.params.id
 
 function handleSubmit(isFormValid: Boolean) {
   submitted.value = true;
