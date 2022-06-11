@@ -2,10 +2,10 @@
   <div>
     <div class="flex block-item h-8rem px-3 mb-4" @click="itemSelected(item)">
       <div class="flex justify-content-center image-item overflow-hidden w-6">
-        <img class="h-full" :src="item.image" >
+        <img class="h-full" :src="item.pictures[0]" >
       </div>
       <ScrollPanel style="width: 100%; height: 100%">
-        <p class="m-0 font-semibold text-xl">{{item.name}}</p>
+        <p class="m-0 font-semibold text-xl">{{item.title}}</p>
         <p class="mt-0 font-semibold text-sm">{{money}}</p>
         <p>{{item.description}}</p>
       </ScrollPanel>
@@ -19,7 +19,7 @@
       :style="{'max-width': '600px', 'min-width': '70px'}">
       
       <div class="header-modal flex justify-content-center overflow-hidden h-10rem">
-        <img class="image-modal" :src="selectedItem.image" >
+        <img class="image-modal" :src="selectedItem.pictures[0]" >
       </div>
       <div class="content">
         <p class="font-semibold">{{money}}</p>
@@ -48,7 +48,7 @@ const toast = useToast();
 interface Item {
   name: string;
   description: string;
-  image: string;
+  pictures: String[];
 }
 const props = defineProps({
   item: {
@@ -62,7 +62,7 @@ const showModal = ref(false)
 const selectedItem = ref<Item>({
   name: '',
   description: '',
-  image: '',
+  pictures: [''],
 })
 
 function itemSelected(item) {
@@ -71,7 +71,7 @@ function itemSelected(item) {
 }
 
 const money = computed(() => {
-  return `R$${props.item.value.toFixed(2).replace('.', ',')}`
+  return `R$${props.item.value?.toFixed(2).replace('.', ',')}`
 })
 
 function sendSolicitation(item) {

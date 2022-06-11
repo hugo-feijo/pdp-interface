@@ -1,6 +1,6 @@
 <template>
   <div class="section-itens shadow-2" v-if="config.items && config.items.length > 0">
-    <h2 class="ml-4 text-2xl font-bold">{{config.section}}</h2>
+    <h2 class="ml-4 text-2xl font-bold">{{config.name}}</h2>
     <ClientOnly>
       <div :key="item.id" v-for="item in config.items">
         <MenuItem :item="item"/>

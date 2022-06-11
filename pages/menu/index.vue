@@ -15,89 +15,46 @@
         <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-shopping-cart" @click="goToCheckout()"/>
       </div>
     </div>
-    <MenuSection :config="foods" class="py-2"/>
-    <MenuSection :config="drinks" class="py-2"/>
+    <div v-for="category in filterItems" :key="category.name">
+      <MenuSection :config="category" class="py-2"/>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { faker } from '@faker-js/faker'
+
+
 const router = useRouter();
+const env = useRuntimeConfig().public
 
 definePageMeta({
   layout: "app-layout",
 });
 
+const menu = ref()
+
+onMounted(() => 
+  getMenu()
+  .then((result: any) => {
+    console.log(result)
+    menu.value = result
+  })
+)
+
+async function getMenu() {
+  return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${localStorage.getItem('restaurantUnityId')}`)
+}
+
+
 const searchText = ref('')
 
-const baseFoods = ref({
-  section: 'Hamburguers',
-  items: [
-    {
-      id: faker.datatype.uuid(),
-      name: 'Brie Burguer',
-      value: 23.94,
-      description: faker.lorem.lines(),
-      image: "/img/foods/ham01.jpg",
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: 'Catupiry com bacon',
-      value: 25.73,
-      description: faker.lorem.lines(),
-      image: "/img/foods/ham02.jpg",
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: 'Costela',
-      value: 29.80,
-      description: faker.lorem.lines(),
-      image: "/img/foods/ham03.jpg",
+const filterItems = computed(() => {
+  return menu.value?.categories
+  .map((base) => {
+    return {
+      name: base.name, 
+      items: base.items.filter(food => food.title.toLowerCase().includes(searchText.value.toLowerCase()))
     }
-  ]
-})
-
-const baseDrinks = ref({
-  section: 'Bebidas',
-  items: [
-    {
-      id: faker.datatype.uuid(),
-      name: 'Coca Cola Litro',
-      value: 9.90,
-      description: faker.lorem.lines(),
-      image: "/img/foods/coca.jpg",
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: 'Heineken Long',
-      value: 7.50,
-      description: faker.lorem.lines(),
-      image: "/img/foods/heineken.jpg",
-    },
-    {
-      id: faker.datatype.uuid(),
-      name: 'Água 500ml',
-      value: 3.50,
-      description: faker.lorem.lines(),
-      image: "/img/foods/agua.jpg",
-    }
-  ]
-})
-
-const foods = computed(() => {
-  return {
-    section: baseFoods.value.section, 
-    items: baseFoods.value.items.filter(food => {
-      return food.name.toLowerCase().includes(searchText.value.toLowerCase())
-    })
-  }
-})
-const drinks = computed(() => {
-  return {
-    section: baseDrinks.value.section, 
-    items: baseDrinks.value.items.filter(drink => {
-      return drink.name.toLowerCase().includes(searchText.value.toLowerCase())
-    })
-  }
+  })
 })
 
 function goToCheckout() {
