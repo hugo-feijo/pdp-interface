@@ -35,7 +35,6 @@ const menu = ref()
 onMounted(() => 
   getMenu()
   .then((result: any) => {
-    console.log(result)
     menu.value = result
   })
 )

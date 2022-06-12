@@ -28,7 +28,7 @@
       <template #footer>
         <div class="flex flex-column align-items-start">
           <span>Vai dividir esse item? selecione abaixo</span>
-          <PeopleHeader selectMode class="w-full"/>
+          <PeopleHeader selectMode class="w-full" @clientsSelected="updateSelectedClients"/>
         </div>
         <Button label="Cancelar" icon="pi pi-times" @click="showModal = !showModal" class="p-button-text"/>
         <Button 
@@ -44,26 +44,28 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
-
-interface Item {
-  name: string;
-  description: string;
-  pictures: String[];
-}
+const config = useRuntimeConfig().public
 const props = defineProps({
   item: {
     type: Object
   }
 })
 
+interface Item {
+  id: Number,
+  name: String;
+  description: String;
+  pictures: String[];
+}
+
 const showModal = ref(false)
-
-
 const selectedItem = ref<Item>({
+  id: 0,
   name: '',
   description: '',
   pictures: [''],
 })
+const selectedClients = ref([])
 
 function itemSelected(item) {
   selectedItem.value = item
@@ -74,10 +76,23 @@ const money = computed(() => {
   return `R$${props.item.value?.toFixed(2).replace('.', ',')}`
 })
 
-function sendSolicitation(item) {
+async function sendSolicitation(item) {
   showModal.value = !showModal.value
+  await createSolicitation()
   toast.add({severity:'success', summary: 'Sucesso', detail:'Pedido enviado para cozinha.', life: 3000});
+}
 
+function updateSelectedClients(clients) {
+  console.log(clients)
+  selectedClients.value = clients
+}
+
+async function createSolicitation() {
+  const request = {
+    clientsId: selectedClients.value.map(client => client.id),
+    itemsId: [selectedItem.value.id]
+  }
+  return await $fetch(`${config.SERVER_URL}/v1/api/solicitation`, {method: 'POST', body: request})
 }
 </script>
 

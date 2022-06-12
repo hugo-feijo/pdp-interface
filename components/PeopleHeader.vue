@@ -42,6 +42,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig().public
 const route = useRoute()
+const emit = defineEmits(['clientsSelected'])
 const props = defineProps({
   selectMode: {
     type: Boolean,
@@ -62,6 +63,7 @@ interface OriginalClient {
 function parseClients(originalClients: OriginalClient[]) {
   return originalClients.map(x => {
     return {
+      id: x.id,
       name: x.name,
       avatar: `https://avatars.dicebear.com/api/initials/${x.name}.svg?radius=50`,
       selected: false
@@ -138,6 +140,7 @@ function selectPeople(people: any) {
       }
       return item
     })
+    emit('clientsSelected', clients.value.filter(x => x.selected))
   }
 }
 </script>
