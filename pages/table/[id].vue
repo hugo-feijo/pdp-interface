@@ -59,7 +59,10 @@ function handleSubmit(isFormValid: Boolean) {
     return;
   }
   toggleDialog();
-  createClient().then(() => router.push('/menu'))
+  createClient().then((result) => {
+    localStorage.setItem('currentClient', JSON.stringify(result))
+    router.push('/menu')
+  })
 }
 
 function toggleDialog() {
