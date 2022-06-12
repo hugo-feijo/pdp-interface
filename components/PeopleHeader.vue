@@ -81,7 +81,9 @@ function fetchClients() {
     localStorage.setItem('orderPadId', r.id)
     localStorage.setItem('restaurantUnityId', r.restaurantTable.restaurantUnity.id)
     localStorage.setItem('clients', JSON.stringify(r.clients))
-    clients.value = parseClients(r.clients)
+    const clientsParsed = parseClients(r.clients)
+    if(clientsParsed.length != clients.value?.length)
+      clients.value = clientsParsed 
   })
 }
 
