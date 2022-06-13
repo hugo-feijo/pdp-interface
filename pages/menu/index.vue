@@ -2,7 +2,10 @@
   <div class="pt-2 flex flex-column align-items-center flex-wrap" style="gap: 2rem">
     <div class="flex w-full">
       <div class="flex-none flex align-items-center justify-content-center">
-        <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-home"/>
+        <Button 
+          class="p-button-rounded p-button-secondary p-button-text p-button-lg" 
+          icon="pi pi-home"
+          style="visibility: hidden"/>
       </div>
       <div class="flex-grow-1 flex align-items-center justify-content-center">
         <span class="p-input-icon-right p-float-label">
@@ -12,7 +15,7 @@
         </span>
       </div>
       <div class="flex-none flex align-items-center justify-content-center">
-        <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-shopping-cart" @click="goToCheckout()"/>
+        <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-sign-out" @click="goToCheckout()"/>
       </div>
     </div>
     <div v-for="category in filterItems" :key="category.name">

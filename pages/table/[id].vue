@@ -53,6 +53,8 @@ const v$ = useVuelidate(rules, state);
 const tableId = route.params.id
 const config = useRuntimeConfig().public
 
+onMounted(() => localStorage.setItem('tableId', tableId.toString()))
+
 function handleSubmit(isFormValid: Boolean) {
   submitted.value = true;
   if (!isFormValid) {

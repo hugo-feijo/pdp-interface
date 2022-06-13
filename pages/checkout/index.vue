@@ -33,49 +33,34 @@
           <span>Total: {{money(slotProps.data.items[0].item.value)}}</span>
         </template>
       </DataTable>
-      <div class="w-full flex justify-content-start mt-3">
-        <span class="text-lg font-semibold">Total: </span>
-        <span class="text-lg">{{money(total)}}</span>
+      <div class="mx-2">
+        <div class="w-full flex justify-content-start mt-3">
+          <span class="text-lg font-semibold">Total: </span>
+          <span class="text-lg">{{money(total)}}</span>
+        </div>
+        <div class="flex justify-content-end">
+          <Button label="Pagar" icon="pi pi-check" @click="checkout()"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { faker } from '@faker-js/faker'
+import { useToast } from "primevue/usetoast";
 const config = useRuntimeConfig().public
 const router = useRouter();
 const solicitations = ref()
-const baseFoods = ref([
-  {
-    id: faker.datatype.uuid(),
-    name: 'Brie Burguer',
-    value: 23.94,
-    description: faker.lorem.lines(),
-    image: "/img/foods/ham01.jpg",
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'Catupiry com bacon',
-    value: 25.73,
-    description: faker.lorem.lines(),
-    image: "/img/foods/ham02.jpg",
-  },
-  {
-    id: faker.datatype.uuid(),
-    name: 'Costela',
-    value: 29.80,
-    description: faker.lorem.lines(),
-    image: "/img/foods/ham03.jpg",
-  }
-])
-
+const toast = useToast();
 const expandedRows = ref([])
+
+function goToMenuPage() {
+  router.push('/menu')
+}
 
 onMounted(() => {
   getSolicitations()
   .then((result) => solicitations.value = parseResult(result))
 })
-
 
 const total = computed(() => {
   let totalValue = 0
@@ -91,10 +76,6 @@ function money (value: Number) {
 definePageMeta({
   layout: "app-layout",
 });
-
-function goToMenuPage() {
-  router.push('/menu')
-}
 const currentClient = JSON.parse(localStorage.getItem('currentClient'))
 
 async function getSolicitations() {
@@ -103,6 +84,19 @@ async function getSolicitations() {
 
 function parseResult(result) {
   return result
+}
+
+function checkout() {
+  inactiveClient()
+  .then(() => {
+    localStorage.removeItem('currentClient');
+    toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
+    router.push(`/table/${localStorage.getItem('tableId')}`)
+  })
+}
+
+async function inactiveClient() {
+  return await $fetch(`${config.SERVER_URL}/v1/api/client/${currentClient.id}/inactive`,{method: 'PUT'})
 }
 </script>
 
