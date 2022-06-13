@@ -27,6 +27,7 @@
               </div>
             </template>
           </Carousel>
+          <span v-else-if="clients?.length == 0" class="w-full flex justify-content-center">Somente você na mesa.</span>
           <span v-else class="w-full flex justify-content-center">Nenhum cliente na mesa ainda.</span>
         </div>
       </ClientOnly>
@@ -53,7 +54,7 @@ const props = defineProps({
 })
 
 const activeAnimation = ref(false)
-
+const currentClient = ref({id: 0})
 const clients = ref()
 
 interface OriginalClient {
@@ -85,7 +86,7 @@ function fetchClients() {
     localStorage.setItem('orderPadId', r.id)
     localStorage.setItem('restaurantUnityId', r.restaurantTable.restaurantUnity.id)
     localStorage.setItem('clients', JSON.stringify(r.clients))
-    const clientsParsed = parseClients(r.clients)
+    const clientsParsed = parseClients(r.clients).filter(x => x.id != currentClient.value.id)
     if(clientsParsed.length != clients.value?.length)
       clients.value = clientsParsed 
   })
@@ -94,6 +95,7 @@ function fetchClients() {
 onMounted(() => {
   fetchClients()
   timer.value = setInterval(fetchClients, 10000)
+  currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
 })
 
 watch(() => route.path, () => fetchClients())

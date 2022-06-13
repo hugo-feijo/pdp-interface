@@ -61,6 +61,7 @@ function goToMenuPage() {
 
 onMounted(() => {
   let showingLoader = loader.show()
+  currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
   getSolicitations()
   .then((result) => {
     showingLoader.hide()
@@ -82,10 +83,10 @@ function money (value: Number) {
 definePageMeta({
   layout: "app-layout",
 });
-const currentClient = JSON.parse(localStorage.getItem('currentClient'))
+const currentClient = ref({id: 0})
 
 async function getSolicitations() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/solicitation/client/${currentClient.id}`)
+  return await $fetch(`${config.SERVER_URL}/v1/api/solicitation/client/${currentClient.value.id}`)
 }
 
 function parseResult(result) {
@@ -104,7 +105,7 @@ function checkout() {
 }
 
 async function inactiveClient() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/client/${currentClient.id}/inactive`,{method: 'PUT'})
+  return await $fetch(`${config.SERVER_URL}/v1/api/client/${currentClient.value.id}/inactive`,{method: 'PUT'})
 }
 </script>
 
