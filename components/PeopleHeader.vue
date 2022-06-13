@@ -4,6 +4,7 @@
       <ClientOnly>
         <div class="card">
           <Carousel 
+            v-if="clients.length > 0"
             :value="clients" 
             :numVisible="5" 
             :numScroll="5" 
@@ -26,6 +27,7 @@
               </div>
             </template>
           </Carousel>
+          <span v-else class="w-full flex justify-content-center">Nenhum cliente na mesa ainda.</span>
         </div>
       </ClientOnly>
     </div>
