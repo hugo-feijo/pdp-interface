@@ -95,7 +95,7 @@ function fetchClients() {
 
 onMounted(() => {
   fetchClients()
-  timer.value = setInterval(fetchClients, 1000)
+  timer.value = setInterval(fetchClients, 10000)
 })
 
 watch(() => route.path, () => fetchClients())
