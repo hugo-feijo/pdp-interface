@@ -88,8 +88,11 @@ function updateSelectedClients(clients) {
 }
 
 async function createSolicitation() {
+  const currentClient = JSON.parse(localStorage.getItem('currentClient'))
+  const clientsId = selectedClients.value.map(client => client.id)
+  clientsId.push(currentClient.id)
   const request = {
-    clientsId: selectedClients.value.map(client => client.id),
+    clientsId: clientsId,
     itemsId: [selectedItem.value.id]
   }
   return await $fetch(`${config.SERVER_URL}/v1/api/solicitation`, {method: 'POST', body: request})
