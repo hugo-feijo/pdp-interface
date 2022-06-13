@@ -86,7 +86,8 @@ function fetchClients() {
     localStorage.setItem('orderPadId', r.id)
     localStorage.setItem('restaurantUnityId', r.restaurantTable.restaurantUnity.id)
     localStorage.setItem('clients', JSON.stringify(r.clients))
-    const clientsParsed = parseClients(r.clients).filter(x => x.id != currentClient.value.id)
+    currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
+    const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
     if(clientsParsed.length != clients.value?.length)
       clients.value = clientsParsed 
   })
@@ -94,8 +95,7 @@ function fetchClients() {
 
 onMounted(() => {
   fetchClients()
-  timer.value = setInterval(fetchClients, 10000)
-  currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
+  timer.value = setInterval(fetchClients, 1000)
 })
 
 watch(() => route.path, () => fetchClients())
