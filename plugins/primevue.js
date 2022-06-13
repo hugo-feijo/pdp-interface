@@ -14,12 +14,15 @@ import Divider from 'primevue/divider';
 import ScrollPanel from 'primevue/scrollpanel';
 import Dialog from 'primevue/dialog';
 import DataTable from 'primevue/datatable';
+import VueLoading from 'vue-loading-overlay';
+import Loading from 'vue-loading-overlay';
 import Column from 'primevue/column';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
+    nuxtApp.vueApp.use(VueLoading);
     nuxtApp.vueApp.component('Button', Button);
     nuxtApp.vueApp.component('InputText', InputText);
     nuxtApp.vueApp.component('InputMask', InputMask);
@@ -33,5 +36,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Dialog', Dialog);
     nuxtApp.vueApp.component('DataTable', DataTable);
     nuxtApp.vueApp.component('Column', Column);
+    nuxtApp.vueApp.component('Loading', Loading);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
 });

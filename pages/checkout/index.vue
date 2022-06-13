@@ -47,19 +47,25 @@
 </template>
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
+import { useLoading } from "vue-loading-overlay";
 const config = useRuntimeConfig().public
 const router = useRouter();
 const solicitations = ref()
 const toast = useToast();
 const expandedRows = ref([])
+const loader = useLoading({isFullPage: true, color: '#2196f3'})
 
 function goToMenuPage() {
   router.push('/menu')
 }
 
 onMounted(() => {
+  let showingLoader = loader.show()
   getSolicitations()
-  .then((result) => solicitations.value = parseResult(result))
+  .then((result) => {
+    showingLoader.hide()
+    solicitations.value = parseResult(result)
+  })
 })
 
 const total = computed(() => {
@@ -87,10 +93,12 @@ function parseResult(result) {
 }
 
 function checkout() {
+  let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
     localStorage.removeItem('currentClient');
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
+    showingLoader.hide()
     router.push(`/table/${localStorage.getItem('tableId')}`)
   })
 }

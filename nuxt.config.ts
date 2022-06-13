@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     'primevue/resources/primevue.css',
     'primeicons/primeicons.css',
     'primeflex/primeflex.css',
-    '~/assets/style/modal-item.scss'
+    '~/assets/style/modal-item.scss',
+    'vue-loading-overlay/dist/vue-loading.css'
   ],
   build: {
       transpile: ['primevue']

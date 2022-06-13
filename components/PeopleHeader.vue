@@ -4,7 +4,7 @@
       <ClientOnly>
         <div class="card">
           <Carousel 
-            v-if="clients.length > 0"
+            v-if="clients?.length > 0"
             :value="clients" 
             :numVisible="5" 
             :numScroll="5" 

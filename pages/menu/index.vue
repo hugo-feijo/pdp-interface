@@ -24,10 +24,11 @@
   </div>
 </template>
 <script setup lang="ts">
-
+import { useLoading } from 'vue-loading-overlay';
 
 const router = useRouter();
 const env = useRuntimeConfig().public
+const loader = useLoading({isFullPage: true, color: '#2196f3'})
 
 definePageMeta({
   layout: "app-layout",
@@ -35,12 +36,14 @@ definePageMeta({
 
 const menu = ref()
 
-onMounted(() => 
+onMounted(() => {
+  let showingLoader = loader.show()
   getMenu()
   .then((result: any) => {
+    showingLoader.hide()
     menu.value = result
   })
-)
+})
 
 async function getMenu() {
   return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${localStorage.getItem('restaurantUnityId')}`)
