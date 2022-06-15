@@ -104,7 +104,7 @@ function checkout() {
     localStorage.removeItem('currentClient');
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
     showingLoader.hide()
-    router.push(`/table/${tableId}`)
+    router.push(`/table/${tableId.value}`)
   })
 }
 
