@@ -13,6 +13,9 @@ export default defineNuxtConfig({
     '~/assets/style/modal-item.scss',
     'vue-loading-overlay/dist/vue-loading.css'
   ],
+  buildModules: [
+    '@pinia/nuxt',
+  ],
   build: {
       transpile: ['primevue']
   },
