@@ -43,6 +43,9 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useLoading } from 'vue-loading-overlay';
+
+const loader = useLoading({isFullPage: true, color: '#2196f3'})
 const config = useRuntimeConfig().public
 const route = useRoute()
 const emit = defineEmits(['clientsSelected'])
@@ -75,12 +78,19 @@ function parseClients(originalClients: OriginalClient[]) {
 }
 
 const timer = ref()
+const tableId = ref()
 
 async function getOrderPad() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${localStorage.getItem('tableId')}`, {method: 'POST'})
+  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId.value}`, {method: 'POST'})
 }
 
 function fetchClients() {
+  let showingLoader
+  let isShowingLoader = false
+  if(isFirstLoad()){
+    isShowingLoader = true
+    showingLoader = loader.show()
+  }
   getOrderPad()
   .then((r: any) => {
     localStorage.setItem('orderPadId', r.id)
@@ -89,11 +99,18 @@ function fetchClients() {
     currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
     const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
     if(clientsParsed.length != clients.value?.length)
-      clients.value = clientsParsed 
+      clients.value = clientsParsed
+    if(isShowingLoader)
+      showingLoader.hide()
   })
 }
 
+function isFirstLoad() {
+  return localStorage.getItem('orderPadId') == null
+}
+
 onMounted(() => {
+  tableId.value = localStorage.getItem('tableId') != null ? localStorage.getItem('tableId') : route.params.id.toString()
   fetchClients()
   timer.value = setInterval(fetchClients, 10000)
 })
