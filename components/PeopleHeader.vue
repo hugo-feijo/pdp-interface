@@ -47,6 +47,7 @@ import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
 
 const loader = useLoading({isFullPage: true, color: '#2196f3'})
+let showingLoader
 const config = useRuntimeConfig().public
 const route = useRoute()
 const emit = defineEmits(['clientsSelected'])
@@ -58,6 +59,7 @@ const props = defineProps({
   }
 })
 
+const isShowingLoader = ref(false)
 const activeAnimation = ref(false)
 const currentClient = ref({id: 0})
 const clients = ref()
@@ -82,38 +84,47 @@ function parseClients(originalClients: OriginalClient[]) {
 const timer = ref()
 const tableId = ref()
 mainStore.$subscribe((_, state) => {
-  tableId.value = state.tableId
+  if(state.tableId != 0 && typeof state.tableId != 'undefined') {
+    tableId.value = state.tableId
+    fetchClients()
+  }
 })
 async function getOrderPad() {
   return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId.value}`, {method: 'POST'})
 }
 
 function fetchClients() {
-  let showingLoader
-  let isShowingLoader = false
   if(isFirstLoad()){
-    isShowingLoader = true
-    showingLoader = loader.show()
+    isShowingLoader.value = true
   }
+
   getOrderPad()
   .then((r: any) => {
-    localStorage.setItem('orderPadId', r.id)
+    mainStore.orderPadId = r.id
     localStorage.setItem('restaurantUnityId', r.restaurantTable.restaurantUnity.id)
-    localStorage.setItem('clients', JSON.stringify(r.clients))
     currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
     const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
-    if(clientsParsed.length != clients.value?.length)
+    if(clientsParsed.length != clients.value?.length){ 
+      mainStore.clients = clientsParsed
       clients.value = clientsParsed
-    if(isShowingLoader)
+    }
+
+    if(isShowingLoader.value && typeof showingLoader != 'undefined') {
+      isShowingLoader.value = false
       showingLoader.hide()
+    }
   })
 }
 
 function isFirstLoad() {
-  return localStorage.getItem('orderPadId') == null
+  return mainStore.orderPadId == 0
 }
 
 onMounted(() => {
+  if(isFirstLoad())
+    showingLoader = loader.show()
+  clients.value = mainStore.clients
+  tableId.value = mainStore.tableId
   fetchClients()
   timer.value = setInterval(fetchClients, 10000)
 })

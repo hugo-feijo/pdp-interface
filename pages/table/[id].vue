@@ -86,7 +86,7 @@ function resetForm() {
 }
 
 async function createClient() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/client`, {method: 'POST', body: state, headers: {'X-Order-Pad-Id': localStorage.getItem('orderPadId')}})
+  return await $fetch(`${config.SERVER_URL}/v1/api/client`, {method: 'POST', body: state, headers: {'X-Order-Pad-Id': mainStore.orderPadId.toString()}})
 }
 
 </script>
