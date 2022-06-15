@@ -44,11 +44,13 @@
 </template>
 <script setup lang="ts">
 import { useLoading } from 'vue-loading-overlay';
+import { useStore } from '@/stores/main-store';
 
 const loader = useLoading({isFullPage: true, color: '#2196f3'})
 const config = useRuntimeConfig().public
 const route = useRoute()
 const emit = defineEmits(['clientsSelected'])
+const mainStore = useStore();
 const props = defineProps({
   selectMode: {
     type: Boolean,
@@ -79,7 +81,9 @@ function parseClients(originalClients: OriginalClient[]) {
 
 const timer = ref()
 const tableId = ref()
-
+mainStore.$subscribe((_, state) => {
+  tableId.value = state.tableId
+})
 async function getOrderPad() {
   return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId.value}`, {method: 'POST'})
 }
@@ -110,7 +114,6 @@ function isFirstLoad() {
 }
 
 onMounted(() => {
-  tableId.value = localStorage.getItem('tableId') != null ? localStorage.getItem('tableId') : route.params.id.toString()
   fetchClients()
   timer.value = setInterval(fetchClients, 10000)
 })

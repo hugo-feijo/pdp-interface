@@ -27,6 +27,7 @@
 	</div>
 </template>
 <script setup lang="ts">
+import { useStore } from '~~/stores/main-store'
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { useLoading } from "vue-loading-overlay";
@@ -37,7 +38,7 @@ const loader = useLoading({isFullPage: true, color: '#2196f3'})
 definePageMeta({
   layout: "app-layout",
 });
-
+const mainStore = useStore();
 const submitted = ref(false);
 const showMessage = ref(false);
 const state = reactive({
@@ -55,7 +56,7 @@ const v$ = useVuelidate(rules, state);
 const tableId = route.params.id
 const config = useRuntimeConfig().public
 
-onMounted(() => localStorage.setItem('tableId', tableId.toString()))
+onMounted(() => mainStore.tableId = Number(tableId.toString()))
 
 function handleSubmit(isFormValid: Boolean) {
   submitted.value = true;

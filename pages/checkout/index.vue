@@ -48,6 +48,9 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
+import { useStore } from "@/stores/main-store";
+
+const mainStore = useStore();
 const config = useRuntimeConfig().public
 const router = useRouter();
 const solicitations = ref()
@@ -65,7 +68,7 @@ onMounted(() => {
   getSolicitations()
   .then((result) => {
     showingLoader.hide()
-    solicitations.value = parseResult(result)
+    solicitations.value = result
   })
 })
 
@@ -89,9 +92,10 @@ async function getSolicitations() {
   return await $fetch(`${config.SERVER_URL}/v1/api/solicitation/client/${currentClient.value.id}`)
 }
 
-function parseResult(result) {
-  return result
-}
+const tableId = ref()
+mainStore.$subscribe((_, state) => {
+  tableId.value = state.tableId
+})
 
 function checkout() {
   let showingLoader = loader.show()
@@ -100,7 +104,7 @@ function checkout() {
     localStorage.removeItem('currentClient');
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
     showingLoader.hide()
-    router.push(`/table/${localStorage.getItem('tableId')}`)
+    router.push(`/table/${tableId}`)
   })
 }
 
