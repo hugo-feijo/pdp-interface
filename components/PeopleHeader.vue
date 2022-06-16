@@ -45,10 +45,13 @@
 <script setup lang="ts">
 import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
+import { useToast } from 'primevue/usetoast';
 
 const loader = useLoading({isFullPage: true, color: '#2196f3'})
 let showingLoader
 const config = useRuntimeConfig().public
+const router = useRouter();
+const toast = useToast();
 const route = useRoute()
 const emit = defineEmits(['clientsSelected'])
 const mainStore = useStore();
@@ -82,38 +85,52 @@ function parseClients(originalClients: OriginalClient[]) {
 }
 
 const timer = ref()
-const tableId = ref()
+const tableId = ref(0)
+const tableCode = ref('')
 mainStore.$subscribe((_, state) => {
   if(state.tableId != 0 && typeof state.tableId != 'undefined') {
     tableId.value = state.tableId
     fetchClients()
   }
+  if(state.tableCode != '' && typeof state.tableCode != 'undefined') {
+    tableCode.value = state.tableCode
+    fetchClients()
+  }
 })
 async function getOrderPad() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId.value}`, {method: 'POST'})
+  return await $fetch(`${config.SERVER_URL}/v1/api/order-pad/open?tableId=${tableId.value}&tableCode=${tableCode.value}`, {method: 'POST'})
 }
 
 function fetchClients() {
   if(isFirstLoad()){
     isShowingLoader.value = true
   }
-
-  getOrderPad()
-  .then((r: any) => {
-    mainStore.orderPadId = r.id
-    mainStore.restaurantUnityId = r.restaurantTable.restaurantUnity.id
-    currentClient.value = mainStore.currentClient
-    const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
-    if(clientsParsed.length != clients.value?.length){ 
-      mainStore.clients = clientsParsed
-      clients.value = clientsParsed
-    }
-
-    if(isShowingLoader.value && typeof showingLoader != 'undefined') {
-      isShowingLoader.value = false
-      showingLoader.hide()
-    }
-  })
+  if(tableId.value != 0 || tableCode.value != '') {
+    getOrderPad()
+    .then((r: any) => {
+      mainStore.orderPadId = r.id
+      mainStore.restaurantUnityId = r.restaurantTable.restaurantUnity.id
+      currentClient.value = mainStore.currentClient
+      const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
+      if(clientsParsed.length != clients.value?.length){ 
+        mainStore.clients = clientsParsed
+        clients.value = clientsParsed
+      }
+  
+      if(isShowingLoader.value && typeof showingLoader != 'undefined') {
+        isShowingLoader.value = false
+        showingLoader.hide()
+      }
+    })
+    .catch((e: any) => {
+      toast.add({severity:'error', summary: 'Falha', detail:'Mesa inexistente.', life: 3000});
+      if(isShowingLoader.value && typeof showingLoader != 'undefined') {
+        isShowingLoader.value = false
+        showingLoader.hide()
+      }
+      router.push('/')
+    })
+  }
 }
 
 function isFirstLoad() {
@@ -125,7 +142,10 @@ onMounted(() => {
     showingLoader = loader.show()
   clients.value = mainStore.clients
   tableId.value = mainStore.tableId
-  fetchClients()
+  tableCode.value = mainStore.tableCode
+  if(clients.value?.length == 0) {
+    fetchClients()
+  }
   timer.value = setInterval(fetchClients, 10000)
 })
 

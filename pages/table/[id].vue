@@ -56,7 +56,12 @@ const v$ = useVuelidate(rules, state);
 const tableId = route.params.id
 const config = useRuntimeConfig().public
 
-onMounted(() => mainStore.tableId = Number(tableId.toString()))
+onMounted(() => {
+  if(isNumeric(tableId))
+    mainStore.tableId = Number(tableId.toString())
+  else
+    mainStore.tableCode = tableId.toString()
+})
 
 function handleSubmit(isFormValid: Boolean) {
   submitted.value = true;
@@ -89,6 +94,11 @@ async function createClient() {
   return await $fetch(`${config.SERVER_URL}/v1/api/client`, {method: 'POST', body: state, headers: {'X-Order-Pad-Id': mainStore.orderPadId.toString()}})
 }
 
+function isNumeric(str) {
+  if (typeof str != "string") 
+    return false
+  return !isNaN(str) && !isNaN(parseFloat(str))
+}
 </script>
 
 

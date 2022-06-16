@@ -4,6 +4,7 @@ export const useStore = defineStore('main', {
   state: () => {
     return { 
       tableId: 0,
+      tableCode: '',
       orderPadId: 0,
       clients: [],
       currentClient: {id: 0},

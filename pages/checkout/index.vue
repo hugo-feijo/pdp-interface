@@ -65,7 +65,7 @@ function goToMenuPage() {
 onMounted(() => {
   let showingLoader = loader.show()
   currentClient.value = mainStore.currentClient
-  tableId.value = mainStore.tableId
+  tableId.value = mainStore.tableId != 0 && typeof mainStore.tableId != 'undefined' ? mainStore.tableId : mainStore.tableCode
   getSolicitations()
   .then((result) => {
     showingLoader.hide()
@@ -95,7 +95,11 @@ async function getSolicitations() {
 
 const tableId = ref()
 mainStore.$subscribe((_, state) => {
-  tableId.value = state.tableId
+  if(state.tableId != 0 && typeof state.tableId != 'undefined')
+    tableId.value = state.tableId
+
+  if(state.tableCode != '' && typeof state.tableCode != 'undefined')
+    tableId.value = state.tableCode
 })
 
 function checkout() {
