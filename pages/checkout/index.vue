@@ -65,6 +65,7 @@ function goToMenuPage() {
 onMounted(() => {
   let showingLoader = loader.show()
   currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
+  tableId.value = mainStore.tableId
   getSolicitations()
   .then((result) => {
     showingLoader.hide()
