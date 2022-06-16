@@ -25,9 +25,9 @@
 </template>
 <script setup lang="ts">
 import { useLoading } from 'vue-loading-overlay';
-import { useStore } from '~~/stores/main-store';
+import { useStore } from '@/stores/main-store';
 
-const store = useStore();
+const mainStore = useStore();
 const router = useRouter();
 const env = useRuntimeConfig().public
 const loader = useLoading({isFullPage: true, color: '#2196f3'})
@@ -48,7 +48,7 @@ onMounted(() => {
 })
 
 async function getMenu() {
-  return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${localStorage.getItem('restaurantUnityId')}`)
+  return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${mainStore.restaurantUnityId}`)
 }
 
 
