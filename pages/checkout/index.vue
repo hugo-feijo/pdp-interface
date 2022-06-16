@@ -64,7 +64,7 @@ function goToMenuPage() {
 
 onMounted(() => {
   let showingLoader = loader.show()
-  currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
+  currentClient.value = mainStore.currentClient
   tableId.value = mainStore.tableId
   getSolicitations()
   .then((result) => {
@@ -102,7 +102,7 @@ function checkout() {
   let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
-    localStorage.removeItem('currentClient');
+    mainStore.currentClient = {id: 0}
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
     showingLoader.hide()
     router.push(`/table/${tableId.value}`)

@@ -102,7 +102,7 @@ function fetchClients() {
   .then((r: any) => {
     mainStore.orderPadId = r.id
     localStorage.setItem('restaurantUnityId', r.restaurantTable.restaurantUnity.id)
-    currentClient.value = JSON.parse(localStorage.getItem('currentClient'))
+    currentClient.value = mainStore.currentClient
     const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
     if(clientsParsed.length != clients.value?.length){ 
       mainStore.clients = clientsParsed

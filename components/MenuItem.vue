@@ -43,6 +43,9 @@
 </template>
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
+import { useStore } from "@/stores/main-store";
+
+const mainStore = useStore();
 const toast = useToast();
 const config = useRuntimeConfig().public
 const props = defineProps({
@@ -83,12 +86,11 @@ async function sendSolicitation(item) {
 }
 
 function updateSelectedClients(clients) {
-  console.log(clients)
   selectedClients.value = clients
 }
 
 async function createSolicitation() {
-  const currentClient = JSON.parse(localStorage.getItem('currentClient'))
+  const currentClient = mainStore.currentClient
   const clientsId = selectedClients.value.map(client => client.id)
   clientsId.push(currentClient.id)
   const request = {

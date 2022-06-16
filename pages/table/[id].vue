@@ -65,9 +65,9 @@ function handleSubmit(isFormValid: Boolean) {
   }
   toggleDialog();
   let showingLoader = loader.show()
-  createClient().then((result) => {
+  createClient().then((result: Object) => {
     showingLoader.hide()
-    localStorage.setItem('currentClient', JSON.stringify(result))
+    mainStore.currentClient = result
     router.push('/menu')
   })
 }

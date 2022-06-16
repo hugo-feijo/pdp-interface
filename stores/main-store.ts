@@ -6,6 +6,7 @@ export const useStore = defineStore('main', {
       tableId: 0,
       orderPadId: 0,
       clients: [],
+      currentClient: {id: 0},
     }
   },
   actions: {
