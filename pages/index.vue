@@ -4,7 +4,7 @@
       @submit.prevent="handleSubmit(!v$.$invalid)"
       class="flex flex-column justify-content-center align-items-center">
       <div class="h-30rem overflow-hidden flex justify-content-center align-items-center">
-        <img src="~/assets/img/identificador.png" class="max-h-full">
+        <img src="~/public/img/identificador.png" class="max-h-full">
       </div>
       <div class="field">
         <div class="p-float-label">
