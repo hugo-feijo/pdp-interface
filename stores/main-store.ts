@@ -16,4 +16,5 @@ export const useStore = defineStore('main', {
       this.tableId = tableId;
     },
   },
+  persist: true
 })

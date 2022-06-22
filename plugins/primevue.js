@@ -1,4 +1,5 @@
-import { defineNuxtPlugin } from "#app";
+import { defineNuxtPlugin, useCookie  } from "#app";
+import { createNuxtPersistedState } from 'pinia-plugin-persistedstate'
 import PrimeVue from "primevue/config";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -20,6 +21,7 @@ import Column from 'primevue/column';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
+    nuxtApp.$pinia.use(createNuxtPersistedState(useCookie))
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
     nuxtApp.vueApp.use(VueLoading);
