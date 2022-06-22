@@ -140,7 +140,7 @@ function isFirstLoad() {
 onMounted(() => {
   if(isFirstLoad())
     showingLoader = loader.show()
-  clients.value = mainStore.clients
+  clients.value = parseClients(mainStore.clients)
   tableId.value = mainStore.tableId
   tableCode.value = mainStore.tableCode
   if(clients.value?.length == 0) {
