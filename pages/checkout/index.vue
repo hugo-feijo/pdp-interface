@@ -38,8 +38,9 @@
           <span class="text-lg font-semibold">Total: </span>
           <span class="text-lg">{{money(total)}}</span>
         </div>
-        <div class="flex justify-content-end">
-          <Button label="Pagar" icon="pi pi-check" @click="checkout()"/>
+        <div class="flex justify-content-end gap-3">
+          <Button label="Pagar online" icon="pi pi-check" @click="payment()"/>
+          <Button label="Pagar no caixa" icon="pi pi-reply" @click="checkout()"/>
         </div>
       </div>
     </div>
@@ -102,12 +103,16 @@ mainStore.$subscribe((_, state) => {
     tableId.value = state.tableCode
 })
 
+function payment() {
+  router.push(`/checkout/payment`)
+}
+
 function checkout() {
   let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
     mainStore.currentClient = {id: 0}
-    toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
+    toast.add({severity:'success', summary: 'Sucesso', detail:'Conta pagaa!!', life: 3000});
     showingLoader.hide()
     router.push(`/table/${tableId.value}`)
   })

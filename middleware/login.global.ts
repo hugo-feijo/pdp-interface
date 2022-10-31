@@ -1,7 +1,7 @@
 import { useStore } from "@/stores/main-store"
 
 const whiteListHome = ['index', 'table-id']
-const blackListLogin = ['menu', 'checkout']
+const blackListLogin = ['menu', 'checkout', 'checkout-payment']
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const store = useStore()
