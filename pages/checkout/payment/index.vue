@@ -160,10 +160,9 @@ function handleSubmit(isFormValid: Boolean) {
   let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
-    mainStore.currentClient = {id: 0}
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta pagaa!!', life: 3000});
     showingLoader.hide()
-    router.push(`/table/${tableId.value}`)
+    router.push(`/checkout/exit`)
   })
 }
 
