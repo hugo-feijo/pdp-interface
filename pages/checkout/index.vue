@@ -111,7 +111,7 @@ function checkout() {
   let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
-    toast.add({severity:'success', summary: 'Sucesso', detail:'Conta pagaa!!', life: 3000});
+    toast.add({severity:'success', summary: 'Sucesso', detail:'Conta paga!!', life: 3000});
     showingLoader.hide()
     router.push(`/checkout/exit`)
   })
