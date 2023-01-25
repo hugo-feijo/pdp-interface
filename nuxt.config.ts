@@ -1,5 +1,3 @@
-import { defineNuxtConfig } from 'nuxt'
-
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   typescript: {
@@ -13,7 +11,7 @@ export default defineNuxtConfig({
     '~/assets/style/modal-item.scss',
     'vue-loading-overlay/dist/vue-loading.css'
   ],
-  buildModules: [
+  modules: [
     '@pinia/nuxt',
   ],
   build: {
