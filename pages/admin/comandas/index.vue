@@ -1,5 +1,5 @@
 <template>
-  <h1>Admin</h1>
+  <h1>Admin Comandas</h1>
 </template>
 
 <script setup lang="ts">

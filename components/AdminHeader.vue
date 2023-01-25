@@ -7,11 +7,12 @@
 </template>
 
 <script setup lang="ts">
+
 const items = [
   {label: 'Comandas', icon: 'pi pi-fw pi-file', to: '/admin/comandas'},
-  {label: 'Mesas', icon: 'pi pi-fw pi-table'},
-  {label: 'Pedidos', icon: 'pi pi-fw pi-clock'}]
-  
+  {label: 'Mesas', icon: 'pi pi-fw pi-table', disabled: true},
+  {label: 'Pedidos', icon: 'pi pi-fw pi-clock', disabled: true}]
+
 </script>
 
 
