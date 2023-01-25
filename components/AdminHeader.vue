@@ -9,7 +9,7 @@
 <script setup lang="ts">
 
 const items = [
-  {label: 'Comandas', icon: 'pi pi-fw pi-file', to: '/admin/comandas'},
+  {label: 'Cardapios', icon: 'pi pi-fw pi-file', to: '/admin/cardapios'},
   {label: 'Mesas', icon: 'pi pi-fw pi-table', disabled: true},
   {label: 'Pedidos', icon: 'pi pi-fw pi-clock', disabled: true}]
 

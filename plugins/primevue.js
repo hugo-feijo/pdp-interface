@@ -16,6 +16,7 @@ import ScrollPanel from 'primevue/scrollpanel';
 import Dialog from 'primevue/dialog';
 import DataTable from 'primevue/datatable';
 import TabMenu from 'primevue/tabmenu';
+import Card from 'primevue/card';
 import VueLoading from 'vue-loading-overlay';
 import Loading from 'vue-loading-overlay';
 import Column from 'primevue/column';
@@ -39,6 +40,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Dialog', Dialog);
     nuxtApp.vueApp.component('DataTable', DataTable);
     nuxtApp.vueApp.component('TabMenu', TabMenu);
+    nuxtApp.vueApp.component('Card', Card);
     nuxtApp.vueApp.component('Column', Column);
     nuxtApp.vueApp.component('Loading', Loading);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
