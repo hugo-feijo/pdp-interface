@@ -18,7 +18,7 @@
         <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-sign-out" @click="goToCheckout()"/>
       </div>
     </div>
-    <div v-for="category in filterItems" :key="category.name">
+    <div v-for="category in filterItems" :key="category.name" class="w-full flex justify-content-center">
       <MenuSection :config="category" class="py-2"/>
     </div>
   </div>
@@ -59,13 +59,20 @@ const filterItems = computed(() => {
   .map((base) => {
     return {
       name: base.name, 
-      items: base.items.filter(food => food.title.toLowerCase().includes(searchText.value.toLowerCase()))
+      items: base.items.filter(food => food.title.toLowerCase().includes(searchText.value.toLowerCase())).sort((x:any,y:any) => sortAlphabetical(x.title, y.title))
     }
-  })
+  }).sort((x:any,y:any) => sortAlphabetical(x.name, y.name))
 })
 
 function goToCheckout() {
   router.push('/checkout')
+}
+
+
+function sortAlphabetical(x : String, y : String) {
+  let a = x.toUpperCase(),
+      b = y.toUpperCase();
+  return a == b ? 0 : a > b ? 1 : -1;
 }
 </script>
 <style lang="scss">

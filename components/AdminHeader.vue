@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 left-0 w-full">
+  <div class="fixed top-0 left-0 w-full z-5">
     <ClientOnly>
       <TabMenu :model="items" />
     </ClientOnly>
