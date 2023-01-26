@@ -59,7 +59,7 @@ const filterItems = computed(() => {
   .map((base) => {
     return {
       name: base.name, 
-      items: base.items.filter(food => food.title.toLowerCase().includes(searchText.value.toLowerCase())).sort((x:any,y:any) => sortAlphabetical(x.title, y.title))
+      items: base.items.filter(food => food.title.toLowerCase().includes(searchText.value.toLowerCase()) && food.active).sort((x:any,y:any) => sortAlphabetical(x.title, y.title))
     }
   }).sort((x:any,y:any) => sortAlphabetical(x.name, y.name))
 })
