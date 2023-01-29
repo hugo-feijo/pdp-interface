@@ -67,7 +67,7 @@ function extractItems(categories : any) {
 
 async function updateItemStatus(id : Number) {
   let showingLoader = loader.show()
-  await $fetch(`${env.SERVER_URL}/v1/api/item/status/${id}`, {method: 'PUT'})
+  await $fetch(`${env.SERVER_URL}/v1/api/item/status/${id}`, {method: 'PUT', headers: {'x-restaurant-unity-id': "1"}})
   getMenu()
   .then((result: any) => {
     showingLoader.hide()

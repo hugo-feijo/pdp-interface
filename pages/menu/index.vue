@@ -26,11 +26,14 @@
 <script setup lang="ts">
 import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
+import WebSocketService from '@/service/WebSocketService';
+
 
 const mainStore = useStore();
 const router = useRouter();
-const env = useRuntimeConfig().public
-const loader = useLoading({isFullPage: true, color: '#2196f3'})
+const env = useRuntimeConfig().public;
+const loader = useLoading({isFullPage: true, color: '#2196f3'});
+let webSocketService : WebSocketService|null = null;
 
 definePageMeta({
   layout: "app-layout",
@@ -39,18 +42,13 @@ definePageMeta({
 const menu = ref()
 
 onMounted(() => {
-  let showingLoader = loader.show()
-  getMenu()
-  .then((result: any) => {
-    showingLoader.hide()
-    menu.value = result
-  })
+  webSocketService = new WebSocketService();
+  connectToMenu();
 })
 
 async function getMenu() {
   return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${mainStore.restaurantUnityId}`)
 }
-
 
 const searchText = ref('')
 
@@ -74,6 +72,20 @@ function sortAlphabetical(x : String, y : String) {
       b = y.toUpperCase();
   return a == b ? 0 : a > b ? 1 : -1;
 }
+
+function connectToMenu() {
+  let showingLoader = loader.show()
+  const onConnect = () => {
+    webSocketService?.subscribe(`/restaurant-unity/${mainStore.restaurantUnityId}/update`, (result:any) => {
+      menu.value = JSON.parse(result.body);
+      showingLoader.hide()
+    })
+    webSocketService?.sendMessage("/app/menu", { restaurantUnityId: mainStore.restaurantUnityId });
+  }
+
+  webSocketService?.connect(onConnect);
+}
+
 </script>
 <style lang="scss">
 </style>
