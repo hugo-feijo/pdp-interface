@@ -28,10 +28,12 @@
 <script setup lang="ts">
 import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
+import WebSocketService from '@/service/WebSocketService';
 
 const mainStore = useStore();
 const env = useRuntimeConfig().public
 const loader = useLoading({isFullPage: true, color: '#2196f3'})
+let webSocketService : WebSocketService|null = null;
 
 definePageMeta({
   layout: "admin-layout",
@@ -40,16 +42,20 @@ definePageMeta({
 const menu = ref()
 
 onMounted(() => {
-  let showingLoader = loader.show()
-  getMenu()
-  .then((result: any) => {
-    showingLoader.hide()
-    menu.value = result
-  })
+  webSocketService = new WebSocketService();
+  connectToMenu();
 })
 
-async function getMenu() {
-  return await $fetch(`${env.SERVER_URL}/v1/api/menu/restaurant-unity/${mainStore.restaurantUnityId}`)
+function connectToMenu() {
+  let showingLoader = loader.show()
+  const onConnect = () => {
+    webSocketService?.subscribe(`/restaurant-unity/${mainStore.restaurantUnityId}/update`, (result:any) => {
+      menu.value = JSON.parse(result.body);
+      showingLoader.hide()
+    })
+    webSocketService?.sendMessage("/app/menu", { restaurantUnityId: mainStore.restaurantUnityId });
+  }
+  webSocketService?.connect(onConnect);
 }
 
 const filterItems = computed(() => {
@@ -66,13 +72,7 @@ function extractItems(categories : any) {
 }
 
 async function updateItemStatus(id : Number) {
-  let showingLoader = loader.show()
   await $fetch(`${env.SERVER_URL}/v1/api/item/status/${id}`, {method: 'PUT', headers: {'x-restaurant-unity-id': "1"}})
-  getMenu()
-  .then((result: any) => {
-    showingLoader.hide()
-    menu.value = result
-  })
 }
 </script>
 

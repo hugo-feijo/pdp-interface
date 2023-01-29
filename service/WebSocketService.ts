@@ -13,7 +13,7 @@ export default class WebSocketService {
   }
 
   connect(onConnected : any) {
-    this.stompClient.connect({}, onConnected, (error) => {
+    this.stompClient.connect({}, onConnected, (error : String) => {
       console.log(error);
       this.connected = false;
     });
@@ -33,7 +33,7 @@ export default class WebSocketService {
     }
   }
 
-  subscribe(url, callback) {
+  subscribe(url : String, callback : Function) {
     this.stompClient.subscribe(url, callback);
   }
 }
