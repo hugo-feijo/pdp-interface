@@ -7,8 +7,8 @@ export default class WebSocketService {
   socket = null;
   stompClient : any = null;
 
-  constructor() {
-    this.socket = new SockJS("http://localhost:8080/snack");
+  constructor(url : String) {
+    this.socket = new SockJS(`${url}/snack`);
     this.stompClient = Stomp.over(this.socket);
   }
 

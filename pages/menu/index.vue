@@ -42,7 +42,7 @@ definePageMeta({
 const menu = ref()
 
 onMounted(() => {
-  webSocketService = new WebSocketService();
+  webSocketService = new WebSocketService(env.SERVER_URL);
   connectToMenu();
 })
 
