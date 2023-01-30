@@ -47,11 +47,11 @@ onMounted(() => {
 })
 
 function connectToMenu() {
-  let showingLoader = loader.show()
+  // let showingLoader = loader.show()
   const onConnect = () => {
     webSocketService?.subscribe(`/restaurant-unity/${mainStore.restaurantUnityId}/update`, (result:any) => {
       menu.value = JSON.parse(result.body);
-      showingLoader.hide()
+      // showingLoader.hide()
     })
     webSocketService?.sendMessage("/app/menu", { restaurantUnityId: mainStore.restaurantUnityId });
   }
