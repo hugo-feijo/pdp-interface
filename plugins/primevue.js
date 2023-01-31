@@ -18,7 +18,7 @@ import Dialog from 'primevue/dialog';
 import DataTable from 'primevue/datatable';
 import TabMenu from 'primevue/tabmenu';
 import Card from 'primevue/card';
-import VueLoading from 'vue-loading-overlay';
+import {LoadingPlugin} from 'vue-loading-overlay';
 import Loading from 'vue-loading-overlay';
 import Column from 'primevue/column';
 
@@ -27,7 +27,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.$pinia.use(createNuxtPersistedState(useCookie))
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
-    nuxtApp.vueApp.use(VueLoading);
+    nuxtApp.vueApp.use(LoadingPlugin);
     nuxtApp.vueApp.component('Badge', Badge);
     nuxtApp.vueApp.component('Button', Button);
     nuxtApp.vueApp.component('InputText', InputText);
