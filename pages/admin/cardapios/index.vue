@@ -26,13 +26,13 @@
 </template>
 
 <script setup lang="ts">
-import { useLoading } from 'vue-loading-overlay';
+// import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
 import WebSocketService from '@/service/WebSocketService';
 
 const mainStore = useStore();
 const env = useRuntimeConfig().public
-const loader = useLoading({isFullPage: true, color: '#2196f3'})
+// const loader = useLoading({isFullPage: true, color: '#2196f3'})
 let webSocketService : WebSocketService|null = null;
 
 definePageMeta({
