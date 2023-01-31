@@ -85,7 +85,6 @@
 </template>
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
-import { useLoading } from "vue-loading-overlay";
 import { useStore } from "@/stores/main-store";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
@@ -95,7 +94,6 @@ const config = useRuntimeConfig().public
 const router = useRouter();
 const solicitations = ref()
 const toast = useToast();
-const loader = useLoading({isFullPage: true, color: '#2196f3'})
 const submitted = ref(false);
 const state = reactive({
   cartao: '',
@@ -120,10 +118,8 @@ function goToMenuPage() {
 }
 
 onMounted(() => {
-  let showingLoader = loader.show()
   currentClient.value = mainStore.currentClient
   tableId.value = mainStore.tableId != 0 && typeof mainStore.tableId != 'undefined' ? mainStore.tableId : mainStore.tableCode
-  showingLoader.hide()
 })
 
 const total = computed(() => {
@@ -157,11 +153,9 @@ function handleSubmit(isFormValid: Boolean) {
   if (!isFormValid) {
     return;
   }
-  let showingLoader = loader.show()
   inactiveClient()
   .then(() => {
     toast.add({severity:'success', summary: 'Sucesso', detail:'Conta pagaa!!', life: 3000});
-    showingLoader.hide()
     router.push(`/checkout/exit`)
   })
 }

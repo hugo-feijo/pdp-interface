@@ -8,8 +8,7 @@ export default defineNuxtConfig({
     'primevue/resources/primevue.css',
     'primeicons/primeicons.css',
     'primeflex/primeflex.css',
-    '~/assets/style/modal-item.scss',
-    'vue-loading-overlay/dist/css/index.css'
+    '~/assets/style/modal-item.scss'
   ],
   modules: [
     '@pinia/nuxt',

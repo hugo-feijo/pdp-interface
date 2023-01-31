@@ -43,12 +43,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useLoading } from 'vue-loading-overlay';
 import { useStore } from '@/stores/main-store';
 import { useToast } from 'primevue/usetoast';
 
-const loader = useLoading({isFullPage: true, color: '#2196f3'})
-let showingLoader
 const config = useRuntimeConfig().public
 const router = useRouter();
 const toast = useToast();
@@ -116,18 +113,9 @@ function fetchClients() {
         mainStore.clients = clientsParsed
         clients.value = clientsParsed
       }
-  
-      if(isShowingLoader.value && typeof showingLoader != 'undefined') {
-        isShowingLoader.value = false
-        showingLoader.hide()
-      }
     })
     .catch((e: any) => {
       toast.add({severity:'error', summary: 'Falha', detail:'Mesa inexistente.', life: 3000});
-      if(isShowingLoader.value && typeof showingLoader != 'undefined') {
-        isShowingLoader.value = false
-        showingLoader.hide()
-      }
       router.push('/')
     })
   }
@@ -138,8 +126,6 @@ function isFirstLoad() {
 }
 
 onMounted(() => {
-  if(isFirstLoad())
-    showingLoader = loader.show()
   clients.value = parseClients(mainStore.clients)
   tableId.value = mainStore.tableId
   tableCode.value = mainStore.tableCode

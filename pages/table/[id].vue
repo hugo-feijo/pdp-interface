@@ -30,10 +30,8 @@
 import { useStore } from '~~/stores/main-store'
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import { useLoading } from "vue-loading-overlay";
 const router = useRouter();
 const route = useRoute();
-const loader = useLoading({isFullPage: true, color: '#2196f3'})
 
 definePageMeta({
   layout: "app-layout",
@@ -69,9 +67,7 @@ function handleSubmit(isFormValid: Boolean) {
     return;
   }
   toggleDialog();
-  let showingLoader = loader.show()
   createClient().then((result: Object) => {
-    showingLoader.hide()
     mainStore.currentClient = result
     router.push('/menu')
   })
