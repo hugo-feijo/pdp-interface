@@ -18,7 +18,12 @@
         <Button class="p-button-rounded p-button-secondary p-button-text p-button-lg" icon="pi pi-sign-out" @click="goToCheckout()"/>
       </div>
     </div>
-    <div v-for="category in filterItems" :key="category.name" class="w-full flex justify-content-center">
+
+    <div v-if="!filterItems" class="w-full flex flex-row justify-content-center gap-3 flex-wrap">
+      <Skeleton class="menu-section-skeleton" height="20rem" borderRadius="0.75rem"/>
+      <Skeleton class="menu-section-skeleton" height="20rem" borderRadius="0.75rem"/>
+    </div>
+    <div v-else v-for="category in filterItems" :key="category.name" class="w-full flex justify-content-center">
       <MenuSection :config="category" class="py-2"/>
     </div>
   </div>
@@ -88,4 +93,7 @@ function connectToMenu() {
 
 </script>
 <style lang="scss">
+.menu-section-skeleton {
+  max-width: 600px;
+}
 </style>
