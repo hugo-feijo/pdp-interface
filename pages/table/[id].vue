@@ -21,7 +21,7 @@
           </div>
           <small v-if="(v$.cpf.$invalid && submitted) || v$.cpf.$pending.$response" class="p-error">CPF é obrigatório</small>
         </div>
-        <Button type="submit" label="Entrar" class="p-component"/>
+        <Button type="submit" label="Entrar" class="p-component" :loading="isCreating"/>
       </form>
 		</div>
 	</div>
@@ -39,6 +39,7 @@ definePageMeta({
 const mainStore = useStore();
 const submitted = ref(false);
 const showMessage = ref(false);
+const isCreating = ref(false);
 const state = reactive({
   name: '',
   cpf: ''
@@ -66,11 +67,14 @@ function handleSubmit(isFormValid: Boolean) {
   if (!isFormValid) {
     return;
   }
+  isCreating.value = true;
   toggleDialog();
   createClient().then((result: Object) => {
     mainStore.currentClient = result
+    isCreating.value = false;  
     router.push('/menu')
-  })
+  }).catch(e => 
+  isCreating.value = false)
 }
 
 function toggleDialog() {

@@ -59,7 +59,6 @@ const props = defineProps({
   }
 })
 
-const isShowingLoader = ref(false)
 const activeAnimation = ref(false)
 const currentClient = ref({id: 0})
 const clients = ref()
@@ -99,9 +98,6 @@ async function getOrderPad() {
 }
 
 function fetchClients() {
-  if(isFirstLoad()){
-    isShowingLoader.value = true
-  }
   if(tableId.value != 0 || tableCode.value != '') {
     getOrderPad()
     .then((r: any) => {
