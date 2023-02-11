@@ -81,7 +81,7 @@ function sortAlphabetical(x : String, y : String) {
 function connectToMenu() {
   // let showingLoader = loader.show()
   const onConnect = () => {
-    webSocketService?.subscribe(`/restaurant-unity/${mainStore.restaurantUnityId}/update`, (result:any) => {
+    webSocketService?.subscribe(`/client/${mainStore.restaurantUnityId}/restaurant-unity/update`, (result:any) => {
       menu.value = JSON.parse(result.body);
       // showingLoader.hide()
     })

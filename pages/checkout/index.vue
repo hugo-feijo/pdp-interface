@@ -112,7 +112,7 @@ function checkout() {
 }
 
 async function inactiveClient() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/client/${currentClient.value.id}/inactive`,{method: 'PUT'})
+  return await $fetch(`${config.SERVER_URL}/v1/api/client/${currentClient.value.id}/inactive?orderPadId=${mainStore.orderPadId}`,{method: 'PUT'})
 }
 </script>
 

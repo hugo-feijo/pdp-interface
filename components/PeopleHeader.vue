@@ -45,13 +45,15 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/main-store';
 import { useToast } from 'primevue/usetoast';
+import WebSocketService from '@/service/WebSocketService';
 
+let webSocketService : WebSocketService|null = null;
 const config = useRuntimeConfig().public
 const router = useRouter();
 const toast = useToast();
-const route = useRoute()
 const emit = defineEmits(['clientsSelected'])
 const mainStore = useStore();
+const env = useRuntimeConfig().public;
 const props = defineProps({
   selectMode: {
     type: Boolean,
@@ -80,7 +82,6 @@ function parseClients(originalClients: OriginalClient[]) {
   })
 }
 
-const timer = ref()
 const tableId = ref(0)
 const tableCode = ref('')
 mainStore.$subscribe((_, state) => {
@@ -103,12 +104,8 @@ function fetchClients() {
     .then((r: any) => {
       mainStore.orderPadId = r.id
       mainStore.restaurantUnityId = r.restaurantTable.restaurantUnity.id
-      currentClient.value = mainStore.currentClient
-      const clientsParsed = parseClients(r.clients).filter(x => x?.id != currentClient.value?.id)
-      if(clientsParsed.length != clients.value?.length){ 
-        mainStore.clients = clientsParsed
-        clients.value = clientsParsed
-      }
+      updateClientsHeader(r.clients);
+      connectToOrderPad(r.id);
     })
     .catch((e: any) => {
       toast.add({severity:'error', summary: 'Falha', detail:'Mesa inexistente.', life: 3000});
@@ -117,21 +114,13 @@ function fetchClients() {
   }
 }
 
-function isFirstLoad() {
-  return mainStore.orderPadId == 0
-}
-
 onMounted(() => {
+  webSocketService = new WebSocketService(env.SERVER_URL);
   clients.value = parseClients(mainStore.clients)
   tableId.value = mainStore.tableId
   tableCode.value = mainStore.tableCode
-  if(clients.value?.length == 0) {
-    fetchClients()
-  }
-  timer.value = setInterval(fetchClients, 10000)
+  fetchClients()
 })
-
-watch(() => route.path, () => fetchClients())
 
 const responsiveOptions = ref([
   {
@@ -178,6 +167,27 @@ function selectPeople(people: any) {
       return item
     })
     emit('clientsSelected', clients.value.filter(x => x.selected))
+  }
+}
+
+function connectToOrderPad(orderPadId : Number) {
+  console.log("Connectingxxxx")
+  const onConnect = () => {
+    webSocketService?.subscribe(`/client/${orderPadId}/order-pad/update`, (result:any) => {
+      updateClientsHeader(JSON.parse(result.body));
+    })
+    webSocketService?.sendMessage("/app/order-pad", { orderPadId: orderPadId });
+  }
+
+  webSocketService?.connect(onConnect);
+}
+
+function updateClientsHeader(newClients: any) {
+  currentClient.value = mainStore.currentClient;
+  const clientsParsed = parseClients(newClients).filter(x => x?.id!=currentClient.value?.id);
+  if(clientsParsed.length != clients.value?.length) {
+    mainStore.clients=clientsParsed;
+    clients.value=clientsParsed;
   }
 }
 </script>

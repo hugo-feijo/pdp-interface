@@ -2,7 +2,6 @@
   <div>
     <NuxtLayout>
       <ClientOnly>
-        <Loading />
         <Toast position="bottom-right"/>
       </ClientOnly>
       <NuxtPage />
