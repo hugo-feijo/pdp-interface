@@ -19,6 +19,7 @@ import DataTable from 'primevue/datatable';
 import TabMenu from 'primevue/tabmenu';
 import Card from 'primevue/card';
 import Column from 'primevue/column';
+import DataView from 'primevue/dataview';
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.$pinia.use(createNuxtPersistedState(useCookie))
@@ -28,6 +29,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Button', Button);
     nuxtApp.vueApp.component('InputText', InputText);
     nuxtApp.vueApp.component('InputMask', InputMask);
+    nuxtApp.vueApp.component('DataView', DataView);
     nuxtApp.vueApp.component('Toast', Toast);
     nuxtApp.vueApp.component('Carousel', Carousel);
     nuxtApp.vueApp.component('Avatar', Avatar);

@@ -10,7 +10,7 @@
 
 const items = [
   {label: 'Cardapios', icon: 'pi pi-fw pi-file', to: '/admin/cardapios'},
-  {label: 'Mesas', icon: 'pi pi-fw pi-table', disabled: true},
+  {label: 'Mesas', icon: 'pi pi-fw pi-table', to: '/admin/tables'},
   {label: 'Pedidos', icon: 'pi pi-fw pi-clock', disabled: true}]
 
 </script>
