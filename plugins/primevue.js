@@ -20,6 +20,8 @@ import TabMenu from 'primevue/tabmenu';
 import Card from 'primevue/card';
 import Column from 'primevue/column';
 import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
+import Dropdown from 'primevue/dropdown';
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.$pinia.use(createNuxtPersistedState(useCookie))
@@ -30,6 +32,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('InputText', InputText);
     nuxtApp.vueApp.component('InputMask', InputMask);
     nuxtApp.vueApp.component('DataView', DataView);
+    nuxtApp.vueApp.component('DataViewLayoutOptions', DataViewLayoutOptions);
     nuxtApp.vueApp.component('Toast', Toast);
     nuxtApp.vueApp.component('Carousel', Carousel);
     nuxtApp.vueApp.component('Avatar', Avatar);
@@ -42,5 +45,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('TabMenu', TabMenu);
     nuxtApp.vueApp.component('Card', Card);
     nuxtApp.vueApp.component('Column', Column);
+    nuxtApp.vueApp.component('Dropdown', Dropdown);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
 });
