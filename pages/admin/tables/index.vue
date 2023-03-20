@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TableDetails :table="tableOpened" @tableClosed="tableDetailsClosed()"/>
     <DataView :value="tables" :layout="layout" :rows="9">
       <template #header>
         <div class="grid grid-nogutter">
@@ -11,8 +12,9 @@
   
       <template #grid="slotProps">
         <Card 
-          class="m-2 cursor-pointer transition-all transition-duration-500 hover:shadow-5" 
-          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy' : 'free'">
+          class="m-2" 
+          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy cursor-pointer transition-all transition-duration-500 hover:shadow-8' : 'free'"
+          @click="openTable(slotProps.data)">
           <template #title>
 
             <h1>{{slotProps.data.name }}</h1>
@@ -23,8 +25,8 @@
       
       <template #list="slotProps">
         <div 
-          class="w-full cursor-pointer transition-all transition-duration-500 hover:shadow-5" 
-          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy' : 'free'">
+          class="w-full" 
+          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy cursor-pointer transition-all transition-duration-500 hover:shadow-8' : 'free'">
 
           <h1 class="text-center">{{slotProps.data.name }}</h1>
 
@@ -37,6 +39,7 @@
 <script setup lang="ts">
 import RestaurantUnityService from '~~/service/RestaurantUnityService';
 import { useStore } from '~~/stores/main-store';
+import func from '~~/vue-temp/vue-editor-bridge';
 
 definePageMeta({
   layout: "admin-layout",
@@ -48,6 +51,7 @@ let restaurantUnityService: RestaurantUnityService|null = null;
 const mainStore = useStore();
 const tables = ref()
 const layout = ref('grid');
+const tableOpened = ref()
 
 onMounted(() => {
   restaurantUnityService = new RestaurantUnityService($fetch, config.SERVER_URL)
@@ -56,6 +60,15 @@ onMounted(() => {
     tables.value = response;
   })
 })
+
+function openTable(table: any) {
+  if(table?.orderPadOpened.length > 0)
+    tableOpened.value = table;
+}
+
+function tableDetailsClosed() {
+  tableOpened.value = null;
+}
 </script>
 
 

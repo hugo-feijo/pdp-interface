@@ -63,7 +63,6 @@ const filterItems = computed(() => {
 })
 
 function extractItems(categories : any) {
-  console.log(categories)
   let items : any = [];
   categories?.forEach(category => {
       items = items.concat(category.items);
