@@ -1,6 +1,8 @@
 import { defineNuxtPlugin, useCookie  } from "#app";
 import { createNuxtPersistedState } from 'pinia-plugin-persistedstate'
 import PrimeVue from "primevue/config";
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 import Badge from 'primevue/badge';
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -20,6 +22,7 @@ import TabMenu from 'primevue/tabmenu';
 import Card from 'primevue/card';
 import Column from 'primevue/column';
 import DataView from 'primevue/dataview';
+import Panel from 'primevue/panel';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import Dropdown from 'primevue/dropdown';
 
@@ -27,6 +30,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.$pinia.use(createNuxtPersistedState(useCookie))
     nuxtApp.vueApp.use(PrimeVue, {ripple: true});
     nuxtApp.vueApp.use(ToastService);
+    nuxtApp.vueApp.component('Accordion', Accordion);
+    nuxtApp.vueApp.component('AccordionTab', AccordionTab);
     nuxtApp.vueApp.component('Badge', Badge);
     nuxtApp.vueApp.component('Button', Button);
     nuxtApp.vueApp.component('InputText', InputText);
@@ -44,6 +49,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('DataTable', DataTable);
     nuxtApp.vueApp.component('TabMenu', TabMenu);
     nuxtApp.vueApp.component('Card', Card);
+    nuxtApp.vueApp.component('Panel', Panel);
     nuxtApp.vueApp.component('Column', Column);
     nuxtApp.vueApp.component('Dropdown', Dropdown);
     nuxtApp.vueApp.directive('styleclass', StyleClass);
