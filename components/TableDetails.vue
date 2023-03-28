@@ -15,7 +15,7 @@
             <AccordionTab 
               v-for="client in orderPad.clients" :key="client.id"
               :header="client.name">
-              {{ client }}
+              <solicitation-resume :current-client="client"/>
             </AccordionTab>
           </Accordion>
         </Panel>
@@ -48,7 +48,7 @@ function afterHide() {
   emit('tableClosed')
 }
 
-function formatBrDate(date) {
+function formatBrDate(date: string) {
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric'});
 }
 </script>
