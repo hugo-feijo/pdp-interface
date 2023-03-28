@@ -52,11 +52,16 @@ const props = defineProps({
 
 onMounted(() => {
   solicitationService = new SolicitationService($fetch, config.SERVER_URL)
-  solicitationService.getSolicitation(props.currentClient?.id)
-  .then((result) => {
-    solicitations.value = result
-  })
+  loadSolicitation();
 })
+
+watch(
+  () => props.currentClient,
+  () => {
+    if(props.currentClient)
+      loadSolicitation()
+  }
+)
 
 const total = computed(() => {
   let totalValue = 0
@@ -65,6 +70,13 @@ const total = computed(() => {
   });
   return totalValue
 });
+
+function loadSolicitation() {
+  solicitationService?.getSolicitation(props.currentClient?.id)
+    .then((result) => {
+      solicitations.value=result;
+    });
+}
 
 function money (value: Number) {
   return `R$${value.toFixed(2).replace('.', ',')}`
