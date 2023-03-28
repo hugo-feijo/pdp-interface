@@ -171,7 +171,6 @@ function selectPeople(people: any) {
 }
 
 function connectToOrderPad(orderPadId : Number) {
-  console.log("Connectingxxxx")
   const onConnect = () => {
     webSocketService?.subscribe(`/client/${orderPadId}/order-pad/update`, (result:any) => {
       updateClientsHeader(JSON.parse(result.body));
