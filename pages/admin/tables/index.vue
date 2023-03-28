@@ -39,7 +39,6 @@
 <script setup lang="ts">
 import RestaurantUnityService from '~~/service/RestaurantUnityService';
 import { useStore } from '~~/stores/main-store';
-import func from '~~/vue-temp/vue-editor-bridge';
 
 definePageMeta({
   layout: "admin-layout",

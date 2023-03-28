@@ -49,7 +49,9 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 import { useStore } from "@/stores/main-store";
+import SolicitationService from "~~/service/SolicitationService";
 
+let solicitationService: SolicitationService|null = null;
 const mainStore = useStore();
 const config = useRuntimeConfig().public
 const router = useRouter();
@@ -62,9 +64,10 @@ function goToMenuPage() {
 }
 
 onMounted(() => {
+  solicitationService = new SolicitationService($fetch, config.SERVER_URL)
   currentClient.value = mainStore.currentClient
   tableId.value = mainStore.tableId != 0 && typeof mainStore.tableId != 'undefined' ? mainStore.tableId : mainStore.tableCode
-  getSolicitations()
+  solicitationService.getSolicitation(currentClient.value.id)
   .then((result) => {
     solicitations.value = result
   })
@@ -85,10 +88,6 @@ definePageMeta({
   layout: "app-layout",
 });
 const currentClient = ref({id: 0})
-
-async function getSolicitations() {
-  return await $fetch(`${config.SERVER_URL}/v1/api/solicitation/client/${currentClient.value.id}`)
-}
 
 const tableId = ref()
 mainStore.$subscribe((_, state) => {

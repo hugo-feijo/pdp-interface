@@ -44,7 +44,9 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 import { useStore } from "@/stores/main-store";
+import SolicitationService from "~~/service/SolicitationService";
 
+let solicitationService: SolicitationService|null = null;
 const mainStore = useStore();
 const toast = useToast();
 const config = useRuntimeConfig().public
@@ -52,6 +54,10 @@ const props = defineProps({
   item: {
     type: Object
   }
+})
+
+onMounted(() => {
+  solicitationService = new SolicitationService($fetch, config.SERVER_URL)
 })
 
 interface Item {
@@ -97,7 +103,7 @@ async function createSolicitation() {
     clientsId: clientsId,
     itemsId: [selectedItem.value.id]
   }
-  return await $fetch(`${config.SERVER_URL}/v1/api/solicitation`, {method: 'POST', body: request})
+  return solicitationService?.createSolicitation(request)
 }
 </script>
 
