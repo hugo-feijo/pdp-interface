@@ -26,7 +26,8 @@
       <template #list="slotProps">
         <div 
           class="w-full" 
-          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy cursor-pointer transition-all transition-duration-500 hover:shadow-8' : 'free'">
+          :class="slotProps.data.orderPadOpened.length > 0 ? 'occupy cursor-pointer transition-all transition-duration-500 hover:shadow-8' : 'free'"
+          @click="openTable(slotProps.data)">
 
           <h1 class="text-center">{{slotProps.data.name }}</h1>
 
