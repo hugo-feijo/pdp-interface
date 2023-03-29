@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TableDetails :table="tableOpened" @tableClosed="tableDetailsClosed()"/>
+    <TableDetails :table="tableOpened" @tableClosed="tableDetailsClosed()" @clientInactived="updateTables()"/>
     <DataView :value="tables" :layout="layout" :rows="9">
       <template #header>
         <div class="grid grid-nogutter">
@@ -54,11 +54,16 @@ const tableOpened = ref()
 
 onMounted(() => {
   restaurantUnityService = new RestaurantUnityService($fetch, config.SERVER_URL)
-  restaurantUnityService.getTablesAndOpenedOrderPad(mainStore.restaurantUnityId)
-  .then((response:any) => {
-    tables.value = response;
-  })
+  updateTables();
 })
+
+function updateTables() {
+  restaurantUnityService?.getTablesAndOpenedOrderPad(mainStore.restaurantUnityId)
+    .then((response: any) => {
+      tables.value=response;
+    });
+  tableOpened.value = null;
+}
 
 function openTable(table: any) {
   if(table?.orderPadOpened.length > 0)

@@ -4129,20 +4129,20 @@ pretty-bytes@^6.0.0:
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-6.0.0.tgz#928be2ad1f51a2e336add8ba764739f9776a8140"
   integrity sha512-6UqkYefdogmzqAZWzJ7laYeJnaXDy2/J+ZqiiMtS7t7OfpXWTlaeGMwX8U6EFvPV/YWWEKRkS8hKS4k60WHTOg==
 
-primeflex@^3.1.2:
+primeflex@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/primeflex/-/primeflex-3.3.0.tgz#6c755230ddf30c8fffed9f817efed28d5fe2bdff"
   integrity sha512-4hvyIO7lERN5bnyURn67Qpozghins8Jq/GSXO6tymc3oa2ADHWuiYBti8ZptPwHu+uD/HTEisS26NEmeIGfPZQ==
 
-primeicons@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-5.0.0.tgz#73a0b6028a77c58a9eeb331ad13aaf085e8451ee"
-  integrity sha512-heygWF0X5HFI1otlZE62pp6ye7sZ8om78J9au2BRkg8O7Y8AHTZ9qKMRzchZUHLe8zUAvdi6hZzzm9XxgwIExw==
+primeicons@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-6.0.1.tgz#431fa7c79825934eefd62087d8e1faa6a9e376ad"
+  integrity sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==
 
-primevue@3.22.3:
-  version "3.22.3"
-  resolved "https://registry.yarnpkg.com/primevue/-/primevue-3.22.3.tgz#62253c8477fec090e86b0ca74493b34b48a3b5a0"
-  integrity sha512-0s40+wc7YvuGzx0giT9/xxJctV2OXwgSdu3+LEa21CIg5+IWmTIlKXwaPaWKuFVuO8tKz8BrQr0Va0j4SObYKw==
+primevue@3.26.1:
+  version "3.26.1"
+  resolved "https://registry.yarnpkg.com/primevue/-/primevue-3.26.1.tgz#15d9f9390346fa63488732cc68ede29eb04e40cb"
+  integrity sha512-I10mYyKMl0GF0KfIZK+psCpifzE6vTW8lvlgB8ukmYghKUmU1Ii879OgD7a8xWM8ijoEaO4mYZ18XXVpQ3xScw==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

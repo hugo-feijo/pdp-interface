@@ -15,6 +15,9 @@
             <AccordionTab 
               v-for="client in orderPad.clients" :key="client.id"
               :header="client.name">
+              <div class="w-full flex justify-content-end mb-3">
+                <Button label="Encerrar" icon="pi pi-money-bill" severity="success" text raised rounded @click="inactiveClient(client.id, orderPad.id)"/>
+              </div>
               <solicitation-resume :current-client="client"/>
             </AccordionTab>
           </Accordion>
@@ -28,7 +31,8 @@
 import { ref } from "vue";
 
 const showModal = ref(false)
-const emit = defineEmits(['tableClosed'])
+const emit = defineEmits(['tableClosed', 'clientInactived'])
+const config = useRuntimeConfig().public
 
 const props = defineProps({
   table: {
@@ -50,6 +54,12 @@ function afterHide() {
 
 function formatBrDate(date: string) {
   return new Date(date).toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric'});
+}
+
+async function inactiveClient(clientId: number, orderPadId: number) {
+  await $fetch(`${config.SERVER_URL}/v1/api/client/${clientId}/inactive?orderPadId=${orderPadId}`,{method: 'PUT'});
+  showModal.value = false
+  emit('clientInactived')
 }
 </script>
 

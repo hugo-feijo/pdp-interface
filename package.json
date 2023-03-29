@@ -11,7 +11,7 @@
     "@types/sockjs-client": "^1.5.1",
     "node-sass": "^8.0.0",
     "nuxt": "^3.1.1",
-    "primevue": "3.22.3",
+    "primevue": "3.26.1",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0"
   },
@@ -22,8 +22,8 @@
     "@vuelidate/validators": "^2.0.0",
     "pinia": "^2.0.29",
     "pinia-plugin-persistedstate": "^1.6.1",
-    "primeflex": "^3.1.2",
-    "primeicons": "5.0.0",
+    "primeflex": "^3.3.0",
+    "primeicons": "6.0.1",
     "sockjs-client": "^1.6.1",
     "webstomp-client": "^1.2.6"
   }
