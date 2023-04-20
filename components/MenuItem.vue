@@ -85,7 +85,7 @@ const money = computed(() => {
   return `R$${props.item.value?.toFixed(2).replace('.', ',')}`
 })
 
-async function sendSolicitation(item) {
+async function sendSolicitation() {
   showModal.value = !showModal.value
   await createSolicitation()
   toast.add({severity:'success', summary: 'Sucesso', detail:'Pedido enviado para cozinha.', life: 3000});
@@ -100,6 +100,7 @@ async function createSolicitation() {
   const clientsId = selectedClients.value.map(client => client.id)
   clientsId.push(currentClient.id)
   const request = {
+    orderPad: mainStore.orderPadId,
     clientsId: clientsId,
     itemsId: [selectedItem.value.id]
   }

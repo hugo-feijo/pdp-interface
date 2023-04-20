@@ -13,6 +13,9 @@ export default class SolicitationService {
 
   async createSolicitation(request: Object) {
     return await this.fetcher(`${this.baseUrl}/v1/api/solicitation`, {method: 'POST', body: request})
+  }
 
+  async finishSolicitation(solicitationId: number) {
+    return await this.fetcher(`${this.baseUrl}/v1/api/solicitation/${solicitationId}`, {method: 'PUT'})
   }
 }
