@@ -88,7 +88,9 @@ import { useToast } from "primevue/usetoast";
 import { useStore } from "@/stores/main-store";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import SolicitationService from "~~/service/SolicitationService";
 
+let solicitationService: SolicitationService|null = null;
 const mainStore = useStore();
 const config = useRuntimeConfig().public
 const router = useRouter();
@@ -120,6 +122,8 @@ function goToMenuPage() {
 onMounted(() => {
   currentClient.value = mainStore.currentClient
   tableId.value = mainStore.tableId != 0 && typeof mainStore.tableId != 'undefined' ? mainStore.tableId : mainStore.tableCode
+  solicitationService = new SolicitationService($fetch, config.SERVER_URL)
+  loadSolicitation();
 })
 
 const total = computed(() => {
@@ -130,13 +134,20 @@ const total = computed(() => {
   return totalValue
 });
 
+function loadSolicitation() {
+  solicitationService?.getSolicitation(currentClient.value.id)
+    .then((result) => {
+      solicitations.value=result;
+    });
+}
+
 function money (value: Number) {
   return `R$${value.toFixed(2).replace('.', ',')}`
 }
 definePageMeta({
   layout: "app-layout",
 });
-const currentClient = ref({id: 0})
+const currentClient = ref()
 
 
 const tableId = ref()
